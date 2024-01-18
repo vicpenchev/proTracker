@@ -183,6 +183,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'DatasetHelper' => App\Filament\Helpers\DatasetHelper::class,
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

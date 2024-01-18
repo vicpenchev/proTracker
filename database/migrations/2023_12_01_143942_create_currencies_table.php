@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
-            $table->string('ticker', 3)->nullable(false);
+            $table->string('code', 3)->nullable(false);
+            $table->text('countryname')->nullable(false);
             $table->string('name', 255)->nullable(false);
+            $table->string('symbol', 255)->nullable(false);
+            $table->boolean('prefix')->nullable(false)->default(true);
             $table->timestamps();
         });
     }

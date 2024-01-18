@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -49,8 +48,8 @@ class User extends Authenticatable
         return $this->hasMany(Account::class, 'user_id', 'id');
     }
 
-    public function labels() : HasMany
+    public function categories() : HasMany
     {
-        return $this->hasMany(Label::class, 'user_id', 'id');
+        return $this->hasMany(Category::class, 'user_id', 'id');
     }
 }
