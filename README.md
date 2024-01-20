@@ -6,6 +6,13 @@ advanced filtering and reporting summaries, stats and charts, it's simple and st
 At the moment this tool can be used/setup locally following the Installation instrictions.
 After some features are ready and the App is polished I can publish an online demo.
 
+<p align="center">
+    <a href="https://github.com/filamentphp/filament/actions"><img alt="Tests passing" src="https://img.shields.io/badge/Tests-passing-green?style=for-the-badge&logo=github"></a>
+    <a href="https://laravel.com"><img alt="Laravel v10.x" src="https://img.shields.io/badge/Laravel-v10.x-FF2D20?style=for-the-badge&logo=laravel"></a>
+    <a href="https://livewire.laravel.com"><img alt="Livewire v3.x" src="https://img.shields.io/badge/Livewire-v3.x-FB70A9?style=for-the-badge"></a>
+    <a href="https://php.net"><img alt="PHP 8.2" src="https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php"></a>
+</p>
+
 ### Dashboard
 ![](./screenshots/proTracker-dashboard.png)
 
@@ -24,7 +31,21 @@ After some features are ready and the App is polished I can publish an online de
 - Laravel `10.x`
 - Fillament `3.x`
 
+
 ## Installation
+
+<b>Prerequisite</b>: You need to have [Composer](https://getcomposer.org/download/) installed on your machine.
+
+1. Clone the repository `git clone https://github.com/vicpenchev/proTracker.git {project_folder}/`
+2. `cd {project_folder}`
+3. `composer install --ignore-platform-reqs`
+4. Copy .env.example -> .env
+5. `./vendor/bin/sail up -d`
+6. `./vendor/bin/sail artisan migrate`
+7. If you want to have testing data - Users, Accounts, Categories, Transactions execute `./vendor/bin/sail artisan db:seed --class=DatabaseSeeder`
+   - Test user for login to the panel:
+     - email: `user_one@admin.com`
+     - password: `111111`
 
 ## Features
 
