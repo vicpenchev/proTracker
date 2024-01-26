@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
+use App\Traits\BootedModelUserActions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +12,7 @@ use Filament\Forms\Components\Select;
 
 class Account extends Model
 {
-    use HasFactory;
+    use HasFactory, BootedModelUserActions;
 
     /**
      * The attributes that are mass assignable.
@@ -25,31 +25,19 @@ class Account extends Model
         'currency_id',
     ];
 
-    /**
-     * @return void
-     */
-    protected static function booted() : void
-    {
-        static::addGlobalScope('by_user', function (Builder $builder) {
-            if(auth()->check()) {
-                $builder->where('user_id', auth()->id());
-            }
-        });
-    }
-
     public function user() : BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class);
     }
 
     public function transactions() : HasMany
     {
-        return $this->hasMany(Transaction::class, 'account_id', 'id');
+        return $this->hasMany(Transaction::class);
     }
 
     public function currency() : BelongsTo
     {
-        return $this->BelongsTo(Currency::class, 'currency_id', 'id');
+        return $this->BelongsTo(Currency::class);
     }
 
     public static function getForm(): array

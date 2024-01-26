@@ -45,11 +45,16 @@ class User extends Authenticatable
 
     public function accounts() : HasMany
     {
-        return $this->hasMany(Account::class, 'user_id', 'id');
+        return $this->hasMany(Account::class);
     }
 
     public function categories() : HasMany
     {
-        return $this->hasMany(Category::class, 'user_id', 'id');
+        return $this->hasMany(Category::class);
+    }
+
+    public function rules() : HasMany
+    {
+        return $this->hasMany(Rule::class);
     }
 }

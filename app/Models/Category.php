@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
+use App\Traits\BootedModelUserActions;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, BootedModelUserActions;
 
     /**
      * The attributes that are mass assignable.
@@ -30,19 +28,7 @@ class Category extends Model
 
     public function user() : BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-
-    /**
-     * @return void
-     */
-    protected static function booted() : void
-    {
-        static::addGlobalScope('by_user', function (Builder $builder) {
-            if(auth()->check()) {
-                $builder->where('user_id', auth()->id());
-            }
-        });
+        return $this->belongsTo(User::class);
     }
 
     public static function getForm(): array

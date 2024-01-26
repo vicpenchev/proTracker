@@ -302,8 +302,8 @@ class TransactionResource extends Resource
                     }),
             ], layout: FiltersLayout::AboveContent)
             ->filtersFormColumns(2)
-            /*->deferFilters()
-            ->filtersTriggerAction(
+            //->deferFilters()
+            /*->filtersTriggerAction(
                 fn (Tables\Actions\Action $action) => $action
                     ->button()
                     ->slideOver()

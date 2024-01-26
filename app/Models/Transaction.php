@@ -12,8 +12,6 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Textarea;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 
 class Transaction extends Model
 {
@@ -43,12 +41,12 @@ class Transaction extends Model
 
     public function account() : BelongsTo
     {
-        return $this->belongsTo(Account::class, 'account_id', 'id');
+        return $this->belongsTo(Account::class);
     }
 
     public function category() : BelongsTo
     {
-        return $this->belongsTo(Category::class, 'category_id', 'id');
+        return $this->belongsTo(Category::class);
     }
 
     public function currency() : Model
