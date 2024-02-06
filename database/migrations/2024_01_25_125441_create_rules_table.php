@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TransactionTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -30,6 +31,10 @@ return new class extends Migration
             $table->enum('type', RuleTypeEnum::toArray())->nullable(false);
             $table->unsignedBigInteger('user_id')->nullable(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->enum('transaction_type', TransactionTypeEnum::toArray())->nullable(false);
+            $table->unsignedBigInteger('category_id')->nullable(true);
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->longText('merge_fields');
             $table->longText('rules');
             $table->timestamps();
         });

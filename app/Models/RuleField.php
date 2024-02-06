@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Rule extends Model
+class RuleField extends Model
 {
     use HasFactory, BootedModelUserActions;
 
@@ -21,12 +21,8 @@ class Rule extends Model
         'title',
         'user_id',
         'type',
-        'rules',
-    ];
-
-    protected $casts = [
-        'merge_fields' => 'array',
-        'rules' => 'array',
+        'slug',
+        'description'
     ];
 
     /**
