@@ -78,6 +78,9 @@ class RuleResource extends Resource
                                 ->afterStateUpdated(function ($state) {
                                     Session::put('rule_fields', $state);
                                 })
+                                ->afterStateHydrated(function ($state) {
+                                    Session::put('rule_fields', $state);
+                                })
                                 ->multiple()
                                 ->options(RuleField::query()->pluck('title', 'id'))
                                 ->visible(fn (Forms\Get $get): bool => in_array($get('type'), RuleTypeEnum::toArray()))
@@ -87,9 +90,9 @@ class RuleResource extends Resource
                         ->description('Rules which will be applied to the original CSV file')
                         ->schema([
                             Forms\Components\Placeholder::make('test')
-                                ->content('If you don\'t select Rule Fields into the previous step then the conditions will be always true and the rule will be applied always.')
+                                ->content('If you don\'t select Rule Fields into the previous step then the conditions will be always true and the rule will be applied to all records.')
                                 ->visible(fn (Forms\Get $get): bool => !((bool)$get('rule_fields'))),
-                            RuleBuilder::make('field_rules')
+                            RuleBuilder::make('rules')
                                 ->visible(fn (Forms\Get $get): bool => (bool)$get('rule_fields'))
                                 ->columnSpanFull()
                                 ->constraints(self::generateAvailableRuleConditions()),
@@ -172,7 +175,8 @@ class RuleResource extends Resource
 
     private static function generateAvailableRuleConditions(): array
     {
-        if(!count(Session::get('rule_fields'))) {
+        //Session::remove('rule_fields');
+        if(!Session::has('rule_fields') || !count(Session::get('rule_fields'))) {
             return [];
         }
 

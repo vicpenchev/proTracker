@@ -22,9 +22,12 @@ class Rule extends Model
         'user_id',
         'type',
         'rules',
+        'rule_fields',
+        'merge_fields',
     ];
 
     protected $casts = [
+        'rule_fields' => 'array',
         'merge_fields' => 'array',
         'rules' => 'array',
     ];

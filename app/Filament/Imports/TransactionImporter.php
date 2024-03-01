@@ -2,21 +2,36 @@
 
 namespace App\Filament\Imports;
 
+use App\Enums\RuleFieldTypeEnum;
 use App\Enums\TransactionCreateTypeEnum;
 use App\Enums\TransactionTypeEnum;
 use App\Models\Category;
+use App\Models\Rule;
+use App\Models\RuleField;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
+use Filament\Support\Concerns\EvaluatesClosures;
+use Filament\Tables\Filters\QueryBuilder;
+use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class TransactionImporter extends Importer
 {
+    use QueryBuilder\Concerns\HasConstraints, EvaluatesClosures;
+
     protected static ?string $model = Transaction::class;
+
+    protected ?Collection $original_data_query;
+    private bool $rule_met = false;
 
     public static function getColumns(): array
     {
@@ -96,12 +111,21 @@ class TransactionImporter extends Importer
                 ->preload()
                 ->relationship('account', 'title')
                 ->required(),
-            TextInput::make('combine_descriptions')
+            Repeater::make('Rules')
+                ->label('Rules')
+                ->helperText('Rules that will be applied to all records. The rules will be applied based on the order.')
+                ->schema([
+                    Select::make('rule')
+                        ->label('Rule')
+                        ->options(Rule::query()->pluck('title', 'id'))
+                ])
+            /*TextInput::make('combine_descriptions')
                 ->label('Combine Description Fields from CSV')
                 ->helperText('Use to combine descriptions from multiple fields. Values are separated by ";". Example: {csv_column_name1}||{csv_column_name2}'),
             Textarea::make('type_mapping')
                 ->label('Type Mapping')
                 ->helperText('Type Mapping. Example: [{"column_name":"Column Name","column_value":"Receipt for Booking","type":"EXPENSE"},{"column_name":"Column Name 2","column_value":"Salary Payment","type":"INCOME"}]'),
+            */
             /*Textarea::make('category_mapping')
                 ->label('Category Mapping')
                 ->helperText('Category Mapping. Searches if string is contained in a specified column content. Example: [{"column_name":"Column Name","column_value":"Billa","category":"Food"},{"column_name":"Column Name 2","column_value":"Gasoline","type":"Bills"}]'),
@@ -112,12 +136,239 @@ class TransactionImporter extends Importer
     protected function afterCreate(): void
     {
         $record = $this->getRecord();
-        $this->combineDescriptions($record);
-        $this->setTypes($record);
+
+        //$this->combineDescriptions($record);
+        //$this->setTypes($record);
         //$this->setCategories($record);
+        $this->applyRules($record);
         $import_id = $this->import->id;
         $record->import_id = $import_id;
         $record->save();
+    }
+
+    private function applyRules($record)
+    {
+        $this->original_data_query = collect([$this->originalData]);
+
+        //$text = 'ДТ';
+        //$data = $this->original_data_query->where('Тип', 'like', "%$text%")->all();
+        //$data = $this->original_data_query->filter(function ($item) use ($text) { return strpos($item['Тип'], $text) !== false;})->all();
+        //Log::info('TEST QUERY WHERE');
+        //Log::info(print_r($data,true));
+
+        $rules = $this->options['Rules'];
+        if(count($rules)){
+            foreach ($rules as $rule) {
+                //Log::info(print_r($rule['rule'], true));
+                $ruleObject = Rule::find($rule['rule']);
+                if ($ruleObject) {
+                    $rule_fields = $ruleObject->rule_fields;
+                    self::constraints($this->generateAvailableRuleConditions($rule_fields));
+                    $this->rule_met = false;
+                    $query = $this->applyRulesToQuery($this->original_data_query, $ruleObject->rules);
+                    /*Log::info(print_r('RULES: ', true));
+                    Log::info(print_r($ruleObject->rules, true));
+                    Log::info(print_r('QUERY: ', true));
+                    Log::info(print_r($query, true));*/
+                    /*$ruleBuilder = QueryBuilder\Forms\Components\RuleBuilder::make('rules')
+                        ->constraints($this->generateAvailableRuleConditions($rule_fields));*/
+                    //Log::info(print_r($ruleObject, true));
+
+                }
+            }
+        }
+        //$ruleObject =
+
+        //Log::info(print_r($this->originalData, true));
+        //Log::info(print_r($rules, true));
+    }
+
+    private static function generateAvailableRuleConditions($rule_fields): array
+    {
+        //Session::remove('rule_fields');
+        if(!$rule_fields || !count($rule_fields)) {
+            return [];
+        }
+
+        $rule_field_objects = [];
+        $selected_rule_fields = array_values($rule_fields);
+        $rule_fields_data = RuleField::query()->whereIn('id', $selected_rule_fields)->get(['title', 'type']);
+
+        foreach ($rule_fields_data as $field_data) {
+            switch ($field_data->type) {
+                case RuleFieldTypeEnum::DATE->value:
+                    $rule_field_objects[] = DateConstraint::make(Str::slug($field_data->title))->label($field_data->title);
+                    break;
+                case RuleFieldTypeEnum::VALUE->value:
+                    $rule_field_objects[] = NumberConstraint::make(Str::slug($field_data->title))->label($field_data->title);
+                    break;
+                case RuleFieldTypeEnum::TEXT->value:
+                    $rule_field_objects[] = TextConstraint::make(Str::slug($field_data->title))->label($field_data->title);
+                    break;
+            }
+        }
+        return $rule_field_objects;
+    }
+
+    public function applyRulesToQuery(Collection $query, array $rules): bool | Collection
+    {
+        foreach ($rules as $ruleIndex => $rule) {
+
+            if ($rule['type'] === QueryBuilder\Forms\Components\RuleBuilder::OR_BLOCK_NAME) {
+                foreach ($rule['data'][QueryBuilder\Forms\Components\RuleBuilder::OR_BLOCK_GROUPS_REPEATER_NAME] as $orGroupIndex => $orGroup) {
+                    $rule_result = $this->applyRulesToQuery(
+                        $query,
+                        $orGroup['rules']
+                    );
+                    if($rule_result) {
+                        Log::info('OR GROUP RULE IS TRUE');
+                        Log::info(print_r($orGroup['rules'], true));
+                        break;
+                    }
+                }
+
+                Log::info(print_r('applyRulesToQuery OR_BLOCK_NAME: ' . $rule['type'], true));
+                /*$this->original_data_query->where(function (Collection $query) use ($rule) {
+                    $isFirst = true;
+
+                    foreach ($rule['data'][RuleBuilder::OR_BLOCK_GROUPS_REPEATER_NAME] as $orGroupIndex => $orGroup) {
+                        $query->{$isFirst ? 'where' : 'orWhere'}(function (Collection $query) use ($orGroup, $orGroupIndex) {
+                            $this->applyRulesToQuery(
+                                $query,
+                                $orGroup['rules']
+                            );
+                        });
+
+                        $isFirst = false;
+                    }
+                });*/
+
+                continue;
+            }
+
+            $this->rule_met = $this->tapOperatorFromRule($query, $rule);
+        }
+
+        return $this->rule_met;
+    }
+
+    protected function tapOperatorFromRule(Collection $query, array $rule): bool
+    {
+        //Log::info(print_r($this->constraints, true));
+        $constraint = $this->getConstraint($rule['type']);
+
+
+        /*if($constraint instanceof TextConstraint) {
+            Log::info('CONSTRAINT: ');
+            Log::info(print_r($constraint, true));
+        }*/
+
+        if (! $constraint) {
+            return false;
+        }
+
+        $operator = $rule['data'][$constraint::OPERATOR_SELECT_NAME];
+        //Log::info('OPERATOR 1: ');
+        //Log::info(print_r($operator, true));
+        if (blank($operator)) {
+            return false;
+        }
+
+        [$operatorName, $isInverseOperator] = $constraint->parseOperatorString($operator);
+        Log::info('RULE TYPE: ');
+        Log::info(print_r($rule['type'], true));
+        Log::info('OPERATOR NAME: ');
+        Log::info(print_r($operatorName, true));
+        Log::info('OPERATOR isInverse: ');
+        Log::info(print_r($isInverseOperator, true));
+        Log::info('OPERATOR settings: ');
+        Log::info(print_r($rule['data']['settings'], true));
+
+        //$operator = $constraint->getOperator($operatorName);
+
+        if (! $operatorName) {
+            return false;
+        }
+
+        /*if($operatorName == 'equals') {
+            $text = trim($rule['data']['settings']['text']);
+            $text = Str::lower($text);
+            //$text = 'test';
+
+            $result = $query->{$isInverseOperator ? 'whereNot' : 'where'}($constraint->getLabel(), '=', $text);
+
+            Log::info('QUERY ');
+            Log::info(print_r($result, true));
+            Log::info('END QUERY ');
+        }*/
+
+
+
+
+
+        $constraint
+            ->settings($rule['data']['settings'])
+            ->inverse($isInverseOperator);
+
+        //if($constraint instanceof TextConstraint) {
+            //if($operatorName == 'equals') {
+        try {
+            $constraint_reflection_class = new \ReflectionClass($constraint);
+            $constraint_namespace = Str::of($constraint_reflection_class->getName())->after('QueryBuilder')->value();
+            Log::info('constraint_namespace ');
+            Log::info(print_r($constraint_namespace, true));
+            Log::info('END constraint_namespace ');
+            $operatorObject = new ('App\Filament\CollectionFilterBuilder' . $constraint_namespace . '\\' . Str::studly($operatorName . '_operator'));
+            $operatorObject
+                ->settings($rule['data']['settings'])
+                ->inverse($isInverseOperator);
+
+            $query = $operatorObject->apply($query, $constraint->getLabel());
+        } catch (\Exception $exception) {
+            Log::info($exception->getMessage());
+            return false;
+        }
+
+        Log::info('QUERY AFTER APPLY ');
+        Log::info(print_r($query->all(), true));
+        Log::info('END QUERY AFTER APPLY ');
+            //}
+        //}
+
+            /*$operator
+                ->constraint($constraint)
+                ->settings($rule['data']['settings'])
+                ->inverse($isInverseOperator);*/
+
+        Log::info('CONSTRAINT LABEL: ');
+        Log::info(print_r($constraint->getLabel(), true));
+
+        /*Log::info('CONSTRAINT Attribute: ');
+        Log::info(print_r($operator->getConstraint()->getAttributeForQuery(), true));
+*/
+/*
+        Log::info('OPERATOR: ');
+        Log::info(print_r($operator, true));*/
+        //$callback($operator);
+
+        $constraint
+            ->settings(null)
+            ->inverse(null);
+
+        if(!($query instanceof Collection) || $query->isEmpty()) {
+            return false;
+        }
+        return true;
+
+        /*$operator
+            ->constraint(null)
+            ->settings(null)
+            ->inverse(null);*/
+    }
+
+    private function createOperator()
+    {
+
     }
 
     private function setTypes($record): void

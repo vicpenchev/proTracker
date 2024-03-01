@@ -71,7 +71,7 @@ class RuleFieldResource extends Resource
                 Tables\Columns\TextColumn::make('description')
                     ->wrap()
                     ->limit(30)
-                    ->tooltip(fn (string $state): string => $state)
+                    //->tooltip(fn (string $state): string => $state ?? '')
                     ->searchable(isIndividual: true, isGlobal: false),
             ])
             ->filters([
