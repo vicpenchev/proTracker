@@ -13,7 +13,8 @@ class IsMinOperator extends Operator
 
         return $query->filter(function ($item) use ($number, $qualifiedColumn) {
             $fieldVal = $this->castFieldValueToNumber($item[$qualifiedColumn]);
-            return ($this->isInverse() ? $fieldVal < $number : $fieldVal >= $number);
+            $compare = $number - $fieldVal;
+            return ($this->isInverse() ? $compare > 0 : $compare <= 0);
         });
     }
 

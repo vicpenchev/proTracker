@@ -5,6 +5,7 @@ namespace App\Filament\CollectionFilterBuilder\Constraints\DateConstraint;
 use App\Filament\CollectionFilterBuilder\Constraints\Operator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class IsAfterOperator extends Operator
 {
@@ -14,7 +15,7 @@ class IsAfterOperator extends Operator
 
         return $query->filter(function ($item) use ($date, $qualifiedColumn) {
             $fieldVal = $this->castFieldValueToNumber($item[$qualifiedColumn]);
-            return ($this->isInverse() ? $fieldVal->diff($date) < 0 : $fieldVal->diff($date) >= 0);
+            return ($this->isInverse() ? $fieldVal->lte($date) : $fieldVal->gte($date));
         });
     }
 

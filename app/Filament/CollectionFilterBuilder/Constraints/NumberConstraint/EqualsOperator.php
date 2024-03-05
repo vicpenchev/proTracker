@@ -4,6 +4,7 @@ namespace App\Filament\CollectionFilterBuilder\Constraints\NumberConstraint;
 
 use App\Filament\CollectionFilterBuilder\Constraints\Operator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class EqualsOperator extends Operator
 {
@@ -13,7 +14,8 @@ class EqualsOperator extends Operator
 
         return $query->filter(function ($item) use ($number, $qualifiedColumn) {
             $fieldVal = $this->castFieldValueToNumber($item[$qualifiedColumn]);
-            return ($this->isInverse() ? $fieldVal != $number : $fieldVal == $number);
+            $epsilon = 0.00001;
+            return ($this->isInverse() ? abs($number-$fieldVal) > $epsilon : abs($number-$fieldVal) < $epsilon);
         });
     }
 

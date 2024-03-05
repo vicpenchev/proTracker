@@ -21,6 +21,8 @@ class Rule extends Model
         'title',
         'user_id',
         'type',
+        'transaction_type',
+        'category_id',
         'rules',
         'rule_fields',
         'merge_fields',

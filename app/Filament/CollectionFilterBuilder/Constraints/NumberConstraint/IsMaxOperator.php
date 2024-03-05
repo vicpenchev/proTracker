@@ -4,6 +4,7 @@ namespace App\Filament\CollectionFilterBuilder\Constraints\NumberConstraint;
 
 use App\Filament\CollectionFilterBuilder\Constraints\Operator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 
 class IsMaxOperator extends Operator
 {
@@ -13,7 +14,9 @@ class IsMaxOperator extends Operator
 
         return $query->filter(function ($item) use ($number, $qualifiedColumn) {
             $fieldVal = $this->castFieldValueToNumber($item[$qualifiedColumn]);
-            return ($this->isInverse() ? $fieldVal > $number : $fieldVal <= $number);
+            //$epsilon = 0.00001;
+            $compare = $number - $fieldVal;
+            return ($this->isInverse() ? $compare < 0 : $compare >= 0);
         });
     }
 

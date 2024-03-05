@@ -14,7 +14,7 @@ class IsBeforeOperator extends Operator
 
         return $query->filter(function ($item) use ($date, $qualifiedColumn) {
             $fieldVal = $this->castFieldValueToNumber($item[$qualifiedColumn]);
-            return ($this->isInverse() ? $fieldVal->diff($date) > 0 : $fieldVal->diff($date) <= 0);
+            return ($this->isInverse() ? $fieldVal->gte($date) : $fieldVal->lte($date));
         });
     }
 
