@@ -9,10 +9,10 @@ class ContainsOperator extends Operator
 {
     public function apply(Collection $query, string $qualifiedColumn) : Collection
     {
-        $text = trim($this->getSettings()['text']);
+        $text = strtolower(trim($this->getSettings()['text']));
 
         return $query->filter(function ($item) use ($text, $qualifiedColumn) {
-            return ($this->isInverse() ? !(str_contains(trim($item[$qualifiedColumn]), $text)) : str_contains(trim($item[$qualifiedColumn]), $text));
+            return ($this->isInverse() ? !(str_contains(strtolower(trim($item[$qualifiedColumn])), $text)) : str_contains(strtolower(trim($item[$qualifiedColumn])), $text));
         });
     }
 }

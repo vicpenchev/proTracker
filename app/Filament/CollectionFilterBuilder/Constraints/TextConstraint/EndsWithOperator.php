@@ -9,10 +9,10 @@ class EndsWithOperator extends Operator
 {
     public function apply(Collection $query, string $qualifiedColumn) : Collection
     {
-        $text = trim($this->getSettings()['text']);
+        $text = strtolower(trim($this->getSettings()['text']));
 
         return $query->filter(function ($item) use ($text, $qualifiedColumn) {
-            return ($this->isInverse() ? !(str_ends_with(trim($item[$qualifiedColumn]), $text)) : str_ends_with(trim($item[$qualifiedColumn]), $text));
+            return ($this->isInverse() ? !(str_ends_with(strtolower(trim($item[$qualifiedColumn])), $text)) : str_ends_with(strtolower(trim($item[$qualifiedColumn])), $text));
         });
     }
 }

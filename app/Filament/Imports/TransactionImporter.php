@@ -122,7 +122,6 @@ class TransactionImporter extends Importer
         $record = $this->getRecord();
         $import_id = $this->import->id;
         $record = $this->applyRules($record);
-        $record->date = Carbon::now();
         $record->import_id = $import_id;
         $record->save();
     }
@@ -133,24 +132,13 @@ class TransactionImporter extends Importer
         $rules = $this->options['Rules'];
         if(count($rules)){
             foreach ($rules as $rule) {
-                /*Log::info('----------------------------------');
-                Log::info('----------------------------------');*/
                 $ruleObject = Rule::find($rule['rule']);
                 $result = null;
                 if ($ruleObject) {
-                   /* Log::info('!!!RULES!!!:');
-                    Log::info(print_r($ruleObject->rules, true));*/
                     $rule_fields = $ruleObject->rule_fields;
                     self::constraints($this->generateAvailableRuleConditions($rule_fields));
                     $rule_result_string = $this->applyRulesToQuery($this->original_data_query, $ruleObject->rules, 0, null);
                     eval('$result = ' . $rule_result_string . ';');
-                    /*Log::info('RULES RESULT STRING: ');
-                    Log::info(print_r($rule_result_string, true));*/
-                    /*Log::info('RULES RESULT: ');
-                    Log::info(print_r(($result ? 'TRUE' : 'FALSE'), true));
-                    Log::info('RULE TYPE: ');
-                    Log::info(print_r(($ruleObject->type), true));
-                    Log::info('----------------------------------');*/
 
                     if($result) {
                         switch ($ruleObject->type) {
