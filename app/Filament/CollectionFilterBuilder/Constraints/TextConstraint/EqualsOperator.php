@@ -9,10 +9,10 @@ class EqualsOperator extends Operator
 {
     public function apply(Collection $query, string $qualifiedColumn) : Collection
     {
-        $text = strtolower(trim($this->getSettings()['text']));
+        $text = mb_strtolower(trim($this->getSettings()['text']));
 
         return $query->filter(function ($item) use ($text, $qualifiedColumn) {
-            return ($this->isInverse() ? strtolower(trim($item[$qualifiedColumn])) != $text : strtolower(trim($item[$qualifiedColumn])) == $text);
+            return ($this->isInverse() ? mb_strtolower(trim($item[$qualifiedColumn])) != $text : mb_strtolower(trim($item[$qualifiedColumn])) == $text);
         });
     }
 }
