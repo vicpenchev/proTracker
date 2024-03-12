@@ -13,6 +13,10 @@ class AccountResource extends Resource
 {
     protected static ?string $model = Account::class;
 
+    protected static ?string $navigationGroup = 'General';
+
+    protected static ?int $navigationSort = 1;
+
     protected static ?string $navigationIcon = 'heroicon-o-wallet';
 
     public static function form(Form $form): Form
@@ -67,5 +71,10 @@ class AccountResource extends Resource
             'create' => Pages\CreateAccount::route('/create'),
             //'edit' => Pages\EditAccount::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }

@@ -13,6 +13,10 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
 
+    protected static ?string $navigationGroup = 'General';
+
+    protected static ?int $navigationSort = 2;
+
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
     public static function form(Form $form): Form
@@ -68,5 +72,10 @@ class CategoryResource extends Resource
             'create' => Pages\CreateCategory::route('/create'),
             //'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }

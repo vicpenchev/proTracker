@@ -7,6 +7,7 @@ use App\Enums\RuleTypeEnum;
 use App\Enums\TransactionCreateTypeEnum;
 use App\Models\Rule;
 use App\Models\RuleField;
+use App\Models\RuleGroup;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Filament\Actions\Imports\ImportColumn;
@@ -32,7 +33,9 @@ class TransactionImporter extends Importer
 
     protected ?Collection $original_data_query;
 
-    private ?Model $current_record;
+    private array $rule_groups = [];
+
+    private array $rules = [];
 
     public static function getColumns(): array
     {
@@ -58,8 +61,11 @@ class TransactionImporter extends Importer
                     if (blank($state)) {
                         return null;
                     }
-
-                    return Carbon::parse($state)->format('Y-m-d H:i:s');
+                    try {
+                        return Carbon::parse($state)->format('Y-m-d H:i:s');
+                    } catch (\Exception $e) {
+                        return null;
+                    }
                 })
                 ->requiredMapping()
                 ->rules(['required', 'date']),
@@ -111,8 +117,8 @@ class TransactionImporter extends Importer
                 ->helperText('Rules that will be applied to all records. The rules will be applied based on the order.')
                 ->schema([
                     Select::make('rule')
-                        ->label('Rule')
-                        ->options(Rule::query()->pluck('title', 'id'))
+                        ->label('Rule Group')
+                        ->options(RuleGroup::query()->pluck('title', 'id'))
                 ])
         ];
     }
@@ -121,56 +127,84 @@ class TransactionImporter extends Importer
     {
         $record = $this->getRecord();
         $import_id = $this->import->id;
+        $this->original_data_query = collect([$this->originalData]);
+        $this->getRules();
         $record = $this->applyRules($record);
         $record->import_id = $import_id;
         $record->save();
     }
 
+    private function getRules() : void
+    {
+        if(!count($this->rule_groups)) {
+            $rules = $this->options['Rules'];
+            if(count($rules)){
+                foreach ($rules as $rule) {
+                    $this->rule_groups[] = RuleGroup::find($rule['rule']);
+                }
+                if(count($this->rule_groups)) {
+                    foreach ($this->rule_groups as $rule_group_model) {
+                        if($rule_group_model->rules) {
+                            foreach ($rule_group_model->rules as $rule_group_rule) {
+                                if(!isset($this->rules[$rule_group_rule['rule']])) {
+                                    $this->rules[$rule_group_rule['rule']] = Rule::find($rule_group_rule['rule']);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private function applyRules($record) : ?Model
     {
-        $this->original_data_query = collect([$this->originalData]);
-        $rules = $this->options['Rules'];
-        if(count($rules)){
-            foreach ($rules as $rule) {
-                $ruleObject = Rule::find($rule['rule']);
-                $result = null;
-                if ($ruleObject) {
-                    $rule_fields = $ruleObject->rule_fields;
-                    self::constraints($this->generateAvailableRuleConditions($rule_fields));
-                    $rule_result_string = $this->applyRulesToQuery($this->original_data_query, $ruleObject->rules, 0, null);
-                    eval('$result = ' . $rule_result_string . ';');
+        if(count($this->rule_groups)){
+            foreach ($this->rule_groups as $rule_group) {
+                if($rule_group) {
+                    $rule_group_rules = $rule_group->rules;
+                    foreach ($rule_group_rules as $rule_group_rule){
+                        $ruleObject = $this->rules[$rule_group_rule['rule']] ?? null;
+                        $result = null;
+                        if ($ruleObject) {
+                            $rule_fields = $ruleObject->rule_fields;
+                            self::constraints($this->generateAvailableRuleConditions($rule_fields));
+                            $rule_result_string = $this->applyRulesToQuery($this->original_data_query, $ruleObject->rules, 0, null);
+                            eval('$result = ' . $rule_result_string . ';');
 
-                    if($result) {
-                        switch ($ruleObject->type) {
-                            case RuleTypeEnum::TRANSACTION_TYPE->value :
-                                $transaction_type = $ruleObject->transaction_type;
-                                if($transaction_type) {
-                                    $record->type = $transaction_type;
-                                }
-                                break;
-                            case RuleTypeEnum::TRANSACTION_CATEGORY->value :
-                                $category_id = $ruleObject->category_id;
-                                if($category_id) {
-                                    $record->category_id = $category_id;
-                                }
-                                break;
-                            case RuleTypeEnum::TRANSACTION_COMBINE->value :
-                                $merge_fields = $ruleObject->merge_fields;
-                                if(is_array($merge_fields) && count($merge_fields)) {
-                                    $combinedArr = [];
-                                    foreach ($merge_fields as $field_name) {
-                                        if(!empty($this->originalData[$field_name])) {
-                                            $combinedArr[] = $this->originalData[$field_name];
+                            if($result) {
+                                switch ($ruleObject->type) {
+                                    case RuleTypeEnum::TRANSACTION_TYPE->value :
+                                        $transaction_type = $ruleObject->transaction_type;
+                                        if($transaction_type) {
+                                            $record->type = $transaction_type;
                                         }
-                                    }
-                                    if(count($combinedArr)){
-                                        $combinedValue = implode('; ', $combinedArr);
-                                        $record->notes = $combinedValue;
-                                    }
+                                        break;
+                                    case RuleTypeEnum::TRANSACTION_CATEGORY->value :
+                                        $category_id = $ruleObject->category_id;
+                                        if($category_id) {
+                                            $record->category_id = $category_id;
+                                        }
+                                        break;
+                                    case RuleTypeEnum::TRANSACTION_COMBINE->value :
+                                        $merge_fields = $ruleObject->merge_fields;
+                                        if(is_array($merge_fields) && count($merge_fields)) {
+                                            $combinedArr = [];
+                                            foreach ($merge_fields as $field_name) {
+                                                if(!empty($this->originalData[$field_name])) {
+                                                    $combinedArr[] = $this->originalData[$field_name];
+                                                }
+                                            }
+                                            if(count($combinedArr)){
+                                                $combinedValue = implode('; ', $combinedArr);
+                                                $record->notes = $combinedValue;
+                                            }
+                                        }
+                                        break;
+                                    default:
+                                        break;
                                 }
-                                break;
-                            default:
-                                break;
+                            }
                         }
                     }
                 }

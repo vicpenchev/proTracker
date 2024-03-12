@@ -37,6 +37,10 @@ class RuleResource extends Resource
 {
     protected static ?string $model = Rule::class;
 
+    protected static ?int $navigationSort = 5;
+
+    protected static ?string $navigationGroup = 'Transaction Import Rules';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -198,5 +202,10 @@ class RuleResource extends Resource
             }
         }
         return $rule_field_objects;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }
