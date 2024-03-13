@@ -5,33 +5,25 @@ namespace App\Filament\Resources;
 use App\Enums\RuleFieldTypeEnum;
 use App\Enums\RuleTypeEnum;
 use App\Enums\TransactionTypeEnum;
-use App\Filament\Helpers\CustomRuleBuilder;
 use App\Filament\Resources\RuleResource\Pages;
-use App\Filament\Resources\RuleResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Rule;
 use App\Models\RuleField;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Filters\QueryBuilder\Forms\Components\RuleBuilder;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Livewire\Component;
 
 class RuleResource extends Resource
 {
@@ -112,7 +104,7 @@ class RuleResource extends Resource
                         type="submit"
                         size="sm"
                     >
-                        Submit
+                        Save
                     </x-filament::button>
                 BLADE))),
             ]);
