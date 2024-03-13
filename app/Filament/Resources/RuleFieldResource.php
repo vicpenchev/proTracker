@@ -24,6 +24,10 @@ class RuleFieldResource extends Resource
 {
     protected static ?string $model = RuleField::class;
 
+    protected static ?int $navigationSort = 4;
+
+    protected static ?string $navigationGroup = 'Transaction Import Rules';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -71,7 +75,7 @@ class RuleFieldResource extends Resource
                 Tables\Columns\TextColumn::make('description')
                     ->wrap()
                     ->limit(30)
-                    ->tooltip(fn (string $state): string => $state)
+                    //->tooltip(fn (string $state): string => $state ?? '')
                     ->searchable(isIndividual: true, isGlobal: false),
             ])
             ->filters([
@@ -102,4 +106,10 @@ class RuleFieldResource extends Resource
             'edit' => Pages\EditRuleField::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
 }

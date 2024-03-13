@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Rule extends Model
+class RuleGroup extends Model
 {
     use HasFactory, BootedModelUserActions;
 
@@ -20,17 +20,11 @@ class Rule extends Model
     protected $fillable = [
         'title',
         'user_id',
-        'type',
-        'transaction_type',
-        'category_id',
         'rules',
-        'rule_fields',
-        'merge_fields',
+        'description',
     ];
 
     protected $casts = [
-        'rule_fields' => 'array',
-        'merge_fields' => 'array',
         'rules' => 'array',
     ];
 

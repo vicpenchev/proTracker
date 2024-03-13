@@ -5,37 +5,33 @@ namespace App\Filament\Resources;
 use App\Enums\RuleFieldTypeEnum;
 use App\Enums\RuleTypeEnum;
 use App\Enums\TransactionTypeEnum;
-use App\Filament\Helpers\CustomRuleBuilder;
 use App\Filament\Resources\RuleResource\Pages;
-use App\Filament\Resources\RuleResource\RelationManagers;
 use App\Models\Category;
 use App\Models\Rule;
 use App\Models\RuleField;
 use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Filters\QueryBuilder\Constraints\SelectConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
 use Filament\Tables\Filters\QueryBuilder\Forms\Components\RuleBuilder;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Livewire\Component;
 
 class RuleResource extends Resource
 {
     protected static ?string $model = Rule::class;
+
+    protected static ?int $navigationSort = 5;
+
+    protected static ?string $navigationGroup = 'Transaction Import Rules';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -78,6 +74,9 @@ class RuleResource extends Resource
                                 ->afterStateUpdated(function ($state) {
                                     Session::put('rule_fields', $state);
                                 })
+                                ->afterStateHydrated(function ($state) {
+                                    Session::put('rule_fields', $state);
+                                })
                                 ->multiple()
                                 ->options(RuleField::query()->pluck('title', 'id'))
                                 ->visible(fn (Forms\Get $get): bool => in_array($get('type'), RuleTypeEnum::toArray()))
@@ -87,9 +86,9 @@ class RuleResource extends Resource
                         ->description('Rules which will be applied to the original CSV file')
                         ->schema([
                             Forms\Components\Placeholder::make('test')
-                                ->content('If you don\'t select Rule Fields into the previous step then the conditions will be always true and the rule will be applied always.')
+                                ->content('If you don\'t select Rule Fields into the previous step then the conditions will be always true and the rule will be applied to all records.')
                                 ->visible(fn (Forms\Get $get): bool => !((bool)$get('rule_fields'))),
-                            RuleBuilder::make('field_rules')
+                            RuleBuilder::make('rules')
                                 ->visible(fn (Forms\Get $get): bool => (bool)$get('rule_fields'))
                                 ->columnSpanFull()
                                 ->constraints(self::generateAvailableRuleConditions()),
@@ -105,7 +104,7 @@ class RuleResource extends Resource
                         type="submit"
                         size="sm"
                     >
-                        Submit
+                        Save
                     </x-filament::button>
                 BLADE))),
             ]);
@@ -172,7 +171,8 @@ class RuleResource extends Resource
 
     private static function generateAvailableRuleConditions(): array
     {
-        if(!count(Session::get('rule_fields'))) {
+        //Session::remove('rule_fields');
+        if(!Session::has('rule_fields') || !count(Session::get('rule_fields'))) {
             return [];
         }
 
@@ -194,5 +194,10 @@ class RuleResource extends Resource
             }
         }
         return $rule_field_objects;
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }
