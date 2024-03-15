@@ -42,8 +42,8 @@ class RuleFieldResource extends Resource
                     ->required()
                     ->live()
                     ->options(array_map(fn($value) => strtolower($value), RuleFieldTypeEnum::toArrayNames())),
-                TextInput::make('slug')
-                    ->maxLength(255),
+                /*TextInput::make('slug')
+                    ->maxLength(255),*/
                 Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),

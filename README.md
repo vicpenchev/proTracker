@@ -1,10 +1,12 @@
 ## proTracker App
 
+<p>
 You can keep your finances in order, track by account, type(expense/income), category, 
 advanced filtering and reporting summaries, stats and charts, it's simple and straight forward.
 
 At the moment this tool can be used/setup locally following the Installation instrictions.
 After some features are ready and the App is polished I can publish an online demo.
+</p>
 
 <p align="center">
     <a href="https://github.com/filamentphp/filament/actions"><img alt="Tests passing" src="https://img.shields.io/badge/Tests-passing-green?style=for-the-badge&logo=github"></a>
@@ -23,8 +25,56 @@ After some features are ready and the App is polished I can publish an online de
 ![](./screenshots/proTracker-categories.png)
 
 ### Transactions
+
+#### Transactions Landing Page (Charts, Stats, Filtering, Transactions List)
 ![](./screenshots/proTracker-transactions.png)
 
+#### Transactions Importing (from CSV file)
+![](./screenshots/proTracker-transactions-import.png)
+
+### Rule Fields
+<p>
+Rule Fields are used to create rules for the transactions importing. 
+There are 3 types of fields: <b>Date, Value, Text</b>. 
+The 'Title' field should correspond to the column name from the CSV file. 
+Based on these Rule Fields you can create conditions for the Rules.
+</p>
+
+#### Rule Fields List
+![](./screenshots/proTracker-ruleFields.png)
+#### Rule Fields Form
+![](./screenshots/proTracker-ruleFields-form.png)
+
+### Rules
+<p>
+Rules allows setting type, category, merging fields for the transactions if the conditions are met. 
+These rules are applied during the transactions importing. 
+The rules are grouped into Rule Groups and the Rule Groups can be selected into the importing tool.
+There are 3 types of rules: <b>transaction_type, transaction_category, 
+transaction_combine</b> (setting type, category, merging fields if the conditions are met).
+</p>
+
+![](./screenshots/proTracker-rules.png)
+
+#### Transaction Type Rule
+![](./screenshots/proTracker-rules-form-type.png)
+![](./screenshots/proTracker-rules-form-type-2.png)
+
+#### Transaction Category Rule
+![](./screenshots/proTracker-rules-form-category.png)
+![](./screenshots/proTracker-rules-form-category-2.png)
+
+#### Transaction Combine Rule
+![](./screenshots/proTracker-rules-form-combine.png)
+![](./screenshots/proTracker-rules-form-combine-2.png)
+
+### Rule Groups
+<p>
+Rule Groups are grouping rules in a specific order. All rules are applied based on the order.
+</p>
+
+![](./screenshots/proTracker-ruleGroups.png)
+![](./screenshots/proTracker-ruleGroups-form.png)
 
 ## Supported Versions
 - PHP `8.x`
@@ -44,14 +94,12 @@ After some features are ready and the App is polished I can publish an online de
 6. `./vendor/bin/sail artisan migrate`
 7. If you want to have testing data - Users, Accounts, Categories, Transactions execute `./vendor/bin/sail artisan db:seed --class=DatabaseSeeder`
    - Test user for login to the panel:
-     - email: `user_one@admin.com`
+     - email: `protracker@protracker.test`
      - password: `111111`
+   - The transactions import functionality can be tested with this [example.csv](./public/example.csv) file.
 
 ## Features
 
-- <b>Rules</b> feature. There will be a separate page for creating/editing transaction rules. 
-These rules will be available during importing transactions and could be used for applying bulk actions into the transactions table 
-(mapping - type, category, combining fields, skip importing etc.).
 - <b>Currency converting</b> feature. If there are accounts in different currencies 
 we need to have a way to convert them into one currency. There will be a setting for choosing the 'main' currency.
 - <b>Imports</b> page. There will be Imports page with all successful/unsuccessful imports and 
