@@ -41,7 +41,7 @@ class CategorySeeder extends Seeder
                 'title' => 'Credit',
                 'user_id' => 1,
                 'color' => '#fb7185',
-                'description' => 'credit installment'
+                'description' => 'Credit Installment'
             ],
             [
                 'title' => 'Vacation',
@@ -50,13 +50,13 @@ class CategorySeeder extends Seeder
                 'description' => 'Vacation / Excursion'
             ],
             [
-                'title' => 'Category User Two 1',
+                'title' => 'Category 1 Pro Tracker 2',
                 'user_id' => 2,
                 'color' => '#bbf7d0',
                 'description' => '',
             ],
             [
-                'title' => 'Category User Two 2',
+                'title' => 'Category 2 Pro Tracker 2',
                 'user_id' => 2,
                 'color' => '#faa706',
                 'description' => '',

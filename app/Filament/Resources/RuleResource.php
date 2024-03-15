@@ -98,15 +98,15 @@ class RuleResource extends Resource
                                 }),*/
                         ]),
                 ])
-                    ->columnSpanFull()
-                    ->submitAction(new HtmlString(Blade::render(<<<BLADE
-                    <x-filament::button
-                        type="submit"
-                        size="sm"
-                    >
-                        Save
-                    </x-filament::button>
-                BLADE))),
+                ->columnSpanFull()
+                ->submitAction(new HtmlString(Blade::render(<<<BLADE
+                <x-filament::button
+                    type="submit"
+                    size="sm"
+                >
+                    Save
+                </x-filament::button>
+            BLADE))),
             ]);
     }
 
@@ -125,9 +125,9 @@ class RuleResource extends Resource
                         RuleTypeEnum::TRANSACTION_COMBINE->value => __('Combination'),
                     })
                     ->icon(fn (int $state): string => match ($state) {
-                        RuleTypeEnum::TRANSACTION_TYPE->value => 'heroicon-o-arrow-down-circle',
-                        RuleTypeEnum::TRANSACTION_CATEGORY->value => 'heroicon-o-arrow-down-circle',
-                        RuleTypeEnum::TRANSACTION_COMBINE->value => 'heroicon-o-arrow-down-circle',
+                        RuleTypeEnum::TRANSACTION_TYPE->value => 'heroicon-o-banknotes',
+                        RuleTypeEnum::TRANSACTION_CATEGORY->value => 'heroicon-o-tag',
+                        RuleTypeEnum::TRANSACTION_COMBINE->value => 'heroicon-o-plus',
                     })
                     ->iconPosition('after')
                     ->color(fn (int $state): string => match ($state) {

@@ -41,6 +41,7 @@ class TransactionImporter extends Importer
     {
         return [
             ImportColumn::make('value')
+                ->example('99.99')
                 ->label('Transaction Sum')
                 ->castStateUsing(function (string $state): ?float {
                     if (blank($state)) {
@@ -56,6 +57,7 @@ class TransactionImporter extends Importer
                 ->numeric(decimalPlaces: 2)
                 ->rules(['required', 'numeric']),
             ImportColumn::make('date')
+                ->example(Carbon::now()->format('d-m-Y H:i:s'))
                 ->label('Transaction date')
                 ->castStateUsing(function (string $state): ?string {
                     if (blank($state)) {
@@ -70,14 +72,17 @@ class TransactionImporter extends Importer
                 ->requiredMapping()
                 ->rules(['required', 'date']),
             ImportColumn::make('from_acc')
+                ->example('IE12BOFI90000112345678')
                 ->label('Own Bank Account Number')
                 ->ignoreBlankState()
                 ->rules(['max:255']),
             ImportColumn::make('to_acc')
+                ->example('IE11BOFI90000112385678')
                 ->label('Recipient Bank Account Number')
                 ->ignoreBlankState()
                 ->rules(['max:255']),
             ImportColumn::make('notes')
+                ->example('TRANSACTIO DESCRIPTION NOTES')
                 ->label('Description')
                 ->ignoreBlankState()
                 ->rules(['max:65535']),

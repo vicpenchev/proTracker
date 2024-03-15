@@ -15,22 +15,22 @@ class AccountSeeder extends Seeder
         Account::insert(
             [
                 [
-                    'title' => 'Account 1 Credit Card',
+                    'title' => 'Pro Tracker 1 Account 1 Credit Card',
                     'user_id' => 1,
                     'currency_id' => 34
                 ],
                 [
-                    'title' => 'Account 1 Debit Card',
+                    'title' => 'Pro Tracker 1 Account 2 Debit Card',
                     'user_id' => 1,
                     'currency_id' => 34
                 ],
                 [
-                    'title' => 'Account 1 Credit Card New',
+                    'title' => 'Pro Tracker 1 Account 3 Credit Card New',
                     'user_id' => 1,
                     'currency_id' => 34
                 ],
                 [
-                    'name' => 'Account 2 Credit Card',
+                    'name' => 'Pro Tracker 2 Account 1 Credit Card',
                     'user_id' => 2,
                     'currency_id' => 108
                 ],

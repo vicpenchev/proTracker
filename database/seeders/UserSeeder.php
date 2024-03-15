@@ -15,13 +15,13 @@ class UserSeeder extends Seeder
         User::insert(
             [
                 [
-                    'name' => 'User One',
-                    'email' => 'user_one@admin.com',
+                    'name' => 'Pro Tracker 1',
+                    'email' => 'protracker@protracker.test',
                     'password' => bcrypt('111111')
                 ],
                 [
-                    'name' => 'User Two',
-                    'email' => 'user_two@admin.com',
+                    'name' => 'Pro Tracker 2',
+                    'email' => 'protracker2@protracker.test',
                     'password' => bcrypt('111111')
                 ],
             ]);

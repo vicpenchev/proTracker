@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\RuleField;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,7 +17,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             AccountSeeder::class,
             CategorySeeder::class,
-            TransactionSeeder::class
+            TransactionSeeder::class,
+            RuleFieldsSeeder::class,
+            RuleSeeder::class,
+            RuleGroupSeeder::class,
         ]);
     }
 }
