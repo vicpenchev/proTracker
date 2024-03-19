@@ -15,6 +15,8 @@ After some features are ready and the App is polished I can publish an online de
     <a href="https://php.net"><img alt="PHP 8.2" src="https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php"></a>
 </p>
 
+[![proTracker](./screenshots/proTracker-youtube.png)](https://youtu.be/d0-Wmern2PQ "proTracker")
+
 ### Dashboard
 ![](./screenshots/proTracker-dashboard.png)
 
