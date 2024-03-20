@@ -7,6 +7,13 @@ use Illuminate\Support\Collection;
 
 class IsMinOperator extends Operator
 {
+    /**
+     * Applies a filter to the given Collection based on the qualified column value.
+     *
+     * @param Collection $query The Collection to apply the filter on.
+     * @param string $qualifiedColumn The qualified column to filter on.
+     * @return Collection The filtered Collection.
+     */
     public function apply(Collection $query, string $qualifiedColumn) : Collection
     {
         $number = floatval($this->getSettings()['number']);
@@ -18,6 +25,15 @@ class IsMinOperator extends Operator
         });
     }
 
+    /**
+     * Casts the given field value to a number with specified precision.
+     *
+     * @param mixed $fieldVal The field value to be cast to a number.
+     * @param int $precision The precision of the resulting number. Defaults to 2 if not provided.
+     *
+     * @return null|float Returns the cast field value as a number, rounded to the specified precision.
+     * Returns null if the field value is blank or cannot be cast to a number.
+     */
     private function castFieldValueToNumber($fieldVal, $precision = 2) : null | float
     {
         if (blank($fieldVal)) {

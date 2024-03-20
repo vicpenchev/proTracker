@@ -7,6 +7,13 @@ use Illuminate\Support\Collection;
 
 class EndsWithOperator extends Operator
 {
+    /**
+     * Applies a filter to the given Collection based on the specified qualified column.
+     *
+     * @param Collection $query The Collection to apply the filter on.
+     * @param string $qualifiedColumn The qualified column to filter on.
+     * @return Collection The filtered Collection.
+     */
     public function apply(Collection $query, string $qualifiedColumn) : Collection
     {
         $text = mb_strtolower(trim($this->getSettings()['text']));
