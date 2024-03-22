@@ -5,7 +5,7 @@ namespace App\Filament\CollectionFilterBuilder\Constraints\NumberConstraint;
 use App\Filament\CollectionFilterBuilder\Constraints\Operator;
 use Illuminate\Support\Collection;
 
-class IsMaxOperator extends Operator
+class IsMaxApplyOperator extends Operator
 {
     /**
      * Applies the filter to the given collection.

@@ -5,7 +5,7 @@ namespace App\Filament\CollectionFilterBuilder\Constraints\TextConstraint;
 use App\Filament\CollectionFilterBuilder\Constraints\Operator;
 use Illuminate\Support\Collection;
 
-class EndsWithOperator extends Operator
+class MultiEndsWithApplyOperator extends Operator
 {
     /**
      * Applies a filter to the given Collection based on the specified qualified column.

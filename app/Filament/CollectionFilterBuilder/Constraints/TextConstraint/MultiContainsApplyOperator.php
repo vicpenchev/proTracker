@@ -5,7 +5,7 @@ namespace App\Filament\CollectionFilterBuilder\Constraints\TextConstraint;
 use App\Filament\CollectionFilterBuilder\Constraints\Operator;
 use Illuminate\Support\Collection;
 
-class ContainsOperator extends Operator
+class MultiContainsApplyOperator extends Operator
 {
     /**
      * Applies a text filter to a collection query.

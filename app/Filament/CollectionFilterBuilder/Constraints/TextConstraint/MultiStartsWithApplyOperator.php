@@ -5,7 +5,7 @@ namespace App\Filament\CollectionFilterBuilder\Constraints\TextConstraint;
 use App\Filament\CollectionFilterBuilder\Constraints\Operator;
 use Illuminate\Support\Collection;
 
-class StartsWithOperator extends Operator
+class MultiStartsWithApplyOperator extends Operator
 {
     /**
      * Apply a filter to the given collection.
