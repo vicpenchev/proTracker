@@ -7,6 +7,19 @@ use Filament\Forms\Components\TagsInput;
 
 class MultiEndsWithOperator extends EndsWithOperator
 {
+    public function getSummary(): string
+    {
+        return __(
+            $this->isInverse() ?
+                'filament-tables::filters/query-builder.operators.text.ends_with.summary.inverse' :
+                'filament-tables::filters/query-builder.operators.text.ends_with.summary.direct',
+            [
+                'attribute' => $this->getConstraint()->getAttributeLabel(),
+                'text' => '',
+            ],
+        );
+    }
+
     public function getFormSchema(): array
     {
         return [

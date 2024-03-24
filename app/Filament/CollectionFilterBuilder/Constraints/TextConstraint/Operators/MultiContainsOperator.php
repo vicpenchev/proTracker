@@ -7,6 +7,20 @@ use Filament\Forms\Components\TagsInput;
 
 class MultiContainsOperator extends ContainsOperator
 {
+
+    public function getSummary(): string
+    {
+        return __(
+            $this->isInverse() ?
+                'filament-tables::filters/query-builder.operators.text.contains.summary.inverse' :
+                'filament-tables::filters/query-builder.operators.text.contains.summary.direct',
+            [
+                'attribute' => $this->getConstraint()->getAttributeLabel(),
+                'text' => '',
+            ],
+        );
+    }
+
     public function getFormSchema(): array
     {
         return [

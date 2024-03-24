@@ -22,10 +22,9 @@ use Filament\Forms\Components\Select;
 use Filament\Support\Concerns\EvaluatesClosures;
 use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables\Filters\QueryBuilder;
-use Filament\Tables\Filters\QueryBuilder\Constraints\Constraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+use App\Filament\CollectionFilterBuilder\Constraints\TextConstraint;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -245,7 +244,7 @@ class TransactionImporter extends Importer
                     $rule_field_objects[] = NumberConstraint::make(Str::slug($field_data->title))->label($field_data->title);
                     break;
                 case RuleFieldTypeEnum::TEXT->value:
-                    $rule_field_objects[] = Constraint::make(Str::slug($field_data->title))
+                    $rule_field_objects[] = TextConstraint::make(Str::slug($field_data->title))
                         ->label($field_data->title)
                         ->icon(FilamentIcon::resolve('tables::filters.query-builder.constraints.text') ?? 'heroicon-m-language')
                         ->operators([
@@ -317,7 +316,10 @@ class TransactionImporter extends Importer
         try {
             $constraint_reflection_class = new \ReflectionClass($constraint);
             $constraint_namespace = Str::of($constraint_reflection_class->getName())->after('QueryBuilder')->value();
-            $operatorObject = new ($this->collection_filter_builder_path . $constraint_namespace . '\\' . Str::studly($operatorName . '_apply_operator'));
+            if(!str_contains($constraint_namespace, $this->collection_filter_builder_path)) {
+                $constraint_namespace = $this->collection_filter_builder_path . $constraint_namespace;
+            }
+            $operatorObject = new ($constraint_namespace . '\\' . Str::studly($operatorName . '_apply_operator'));
             $operatorObject
                 ->settings($rule['data']['settings'])
                 ->inverse($isInverseOperator);
