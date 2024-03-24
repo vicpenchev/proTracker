@@ -21,7 +21,7 @@ use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+use App\Filament\CollectionFilterBuilder\Constraints\TextConstraint;
 use Filament\Tables\Filters\QueryBuilder\Forms\Components\RuleBuilder;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Select;
@@ -29,7 +29,6 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use Filament\Tables\Filters\QueryBuilder\Constraints\Constraint;
 
 class RuleResource extends Resource
 {
@@ -195,7 +194,7 @@ class RuleResource extends Resource
                     $rule_field_objects[] = NumberConstraint::make(Str::slug($field_data->title))->label($field_data->title);
                     break;
                 case RuleFieldTypeEnum::TEXT->value:
-                    $rule_field_objects[] = Constraint::make(Str::slug($field_data->title))
+                    $rule_field_objects[] = TextConstraint::make(Str::slug($field_data->title))
                         ->label($field_data->title)
                         ->icon(FilamentIcon::resolve('tables::filters.query-builder.constraints.text') ?? 'heroicon-m-language')
                         ->operators([

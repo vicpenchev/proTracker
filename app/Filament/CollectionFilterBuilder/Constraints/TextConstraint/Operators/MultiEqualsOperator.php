@@ -7,6 +7,20 @@ use Filament\Forms\Components\TagsInput;
 
 class MultiEqualsOperator extends EqualsOperator
 {
+
+    public function getSummary(): string
+    {
+        return __(
+            $this->isInverse() ?
+                'filament-tables::filters/query-builder.operators.text.equals.summary.inverse' :
+                'filament-tables::filters/query-builder.operators.text.equals.summary.direct',
+            [
+                'attribute' => $this->getConstraint()->getAttributeLabel(),
+                'text' => '',
+            ],
+        );
+    }
+
     public function getFormSchema(): array
     {
         return [
