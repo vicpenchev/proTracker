@@ -15,7 +15,9 @@ class MultiEndsWithOperator extends EndsWithOperator
                 'filament-tables::filters/query-builder.operators.text.ends_with.summary.direct',
             [
                 'attribute' => $this->getConstraint()->getAttributeLabel(),
-                'text' => '',
+                'text' => (is_array($this->getSettings()['text'])
+                    ? (count($this->getSettings()['text']) > 1) ? '("' . implode('" OR "', $this->getSettings()['text']) . '")' : implode(' ', $this->getSettings()['text'])
+                    : $this->getSettings()['text']),
             ],
         );
     }
