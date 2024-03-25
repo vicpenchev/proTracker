@@ -6,7 +6,7 @@ use App\Filament\CollectionFilterBuilder\Constraints\Operator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
-class IsYearOperator extends Operator
+class IsYearApplyOperator extends Operator
 {
     /**
      * Applies the year filter to the given collection query.

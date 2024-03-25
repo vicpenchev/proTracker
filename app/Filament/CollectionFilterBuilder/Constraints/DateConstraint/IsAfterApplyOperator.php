@@ -6,7 +6,7 @@ use App\Filament\CollectionFilterBuilder\Constraints\Operator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
-class IsAfterOperator extends Operator
+class IsAfterApplyOperator extends Operator
 {
     /**
      * Applies the filter to the given collection.
