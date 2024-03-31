@@ -25,7 +25,7 @@ class RuleGroup extends Model
     ];
 
     protected $casts = [
-        'rules' => 'array',
+        'rules' => 'json',
     ];
 
     /**

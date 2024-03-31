@@ -29,9 +29,9 @@ class Rule extends Model
     ];
 
     protected $casts = [
-        'rule_fields' => 'array',
-        'merge_fields' => 'array',
-        'rules' => 'array',
+        'rule_fields' => 'json',
+        'merge_fields' => 'json',
+        'rules' => 'json',
     ];
 
     /**
