@@ -88,7 +88,7 @@ class RuleFieldResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //RulesRelationManager::class,
+            RulesRelationManager::class,
         ];
     }
 

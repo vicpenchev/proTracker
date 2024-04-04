@@ -3,8 +3,6 @@
 namespace App\Filament\Resources\RuleFieldResource\RelationManagers;
 
 use App\Enums\RuleTypeEnum;
-use Filament\Forms;
-use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -43,14 +41,14 @@ class RulesRelationManager extends RelationManager
             ])
             ->filters([])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                //Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                //Tables\Actions\EditAction::make(),
+                //Tables\Actions\DeleteAction::make(),
             ])
             ->groupedBulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                //Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 

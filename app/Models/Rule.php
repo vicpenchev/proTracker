@@ -6,6 +6,8 @@ use App\Traits\BootedModelUserActions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Rule extends Model
 {
@@ -29,7 +31,7 @@ class Rule extends Model
     ];
 
     protected $casts = [
-        'rule_fields' => 'json',
+        'rule_fields' => 'array',
         'merge_fields' => 'json',
         'rules' => 'json',
     ];
@@ -42,5 +44,20 @@ class Rule extends Model
     public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function rule_fields() : BelongsToMany
+    {
+        return $this->belongsToMany(RuleField::class, 'rule_field_rule')->withTimestamps();
+    }
+
+    public function rule_groups() : BelongsToMany
+    {
+        return $this->belongsToMany(RuleGroup::class, 'rule_group_rule')->withTimestamps();
+    }
+
+    public function related_ruleFields() : BelongsToMany
+    {
+        return $this->belongsToMany(RuleField::class, 'rule_field_rule', 'rule_id', 'rule_field_id')->withTimestamps();
     }
 }

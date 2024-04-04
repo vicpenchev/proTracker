@@ -38,14 +38,19 @@ class RuleGroupResource extends Resource
                     ->maxLength(65535)
                     ->columnSpanFull(),
                 Repeater::make('rules')
+                    ->relationship()
                     ->label('Rules')
                     ->helperText('Rules that will be applied to all records. The rules will be applied based on the order.')
                     ->columnSpanFull()
                     ->schema([
-                        Select::make('rule')
+                        Select::make('rule_id')
                             ->label('Rule')
-                            ->options(Rule::query()->pluck('title', 'id'))
-                    ]),
+                            ->disableOptionsWhenSelectedInSiblingRepeaterItems()
+                            ->relationship('rule', 'title')
+                            ->required(),
+                    ])
+                    ->orderColumn('order')
+                    ->minItems(1)
             ]);
     }
 

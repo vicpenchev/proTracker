@@ -35,4 +35,9 @@ class RuleField extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function rules() : BelongsToMany
+    {
+        return $this->belongsToMany(Rule::class, 'rule_field_rule')->withTimestamps();
+    }
 }

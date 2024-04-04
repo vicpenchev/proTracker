@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title', 255)->nullable(false);
             $table->unsignedBigInteger('user_id')->nullable(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->json('rules')->nullable();
+            //$table->json('rules')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });

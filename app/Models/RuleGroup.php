@@ -6,6 +6,8 @@ use App\Traits\BootedModelUserActions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RuleGroup extends Model
 {
@@ -25,7 +27,7 @@ class RuleGroup extends Model
     ];
 
     protected $casts = [
-        'rules' => 'json',
+        'rules' => 'array',
     ];
 
     /**
@@ -36,5 +38,15 @@ class RuleGroup extends Model
     public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function rules() : HasMany
+    {
+        return $this->hasMany(RuleGroupPivot::class);
+    }
+
+    public function related_rules() : BelongsToMany
+    {
+        return $this->belongsToMany(Rule::class, 'rule_group_rule')->using(RuleGroupPivot::class)->orderByPivot('order');
     }
 }

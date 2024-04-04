@@ -35,7 +35,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id')->nullable(true);
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->json('merge_fields')->nullable();
-            $table->json('rule_fields')->nullable();
+            //$table->json('rule_fields')->nullable();
             $table->json('rules')->nullable();
             $table->timestamps();
         });

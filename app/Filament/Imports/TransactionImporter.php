@@ -145,10 +145,20 @@ class TransactionImporter extends Importer
             $rules = $this->options['Rules'];
             if(count($rules)){
                 foreach ($rules as $rule) {
-                    $this->rule_groups[] = RuleGroup::find($rule['rule']);
+                    /*Log::info('RULE OPTION');
+                    Log::info(print_r($rule['rule'], true));*/
+                    $this->rule_groups[$rule['rule']] = RuleGroup::find($rule['rule'])->related_rules()->get();
                 }
-                if(count($this->rule_groups)) {
+                //dd(count($this->rule_groups));
+                //dd($this->rule_groups);
+                Log::info(print_r('$this->rule_groups', true));
+                Log::info(print_r(count($this->rule_groups), true));
+                /*if(count($this->rule_groups)) {
                     foreach ($this->rule_groups as $rule_group_model) {
+                        Log::info('RULE GROUP RULES');
+                        Log::info(print_r($rule_group_model->rules()->orderBy('order')->get(), true));
+                        $this->rules[$rule_group_rule['rule']] = Rule::find($rule_group_rule['rule']);
+                        //dd($rule_group_model->rules);
                         if($rule_group_model->rules) {
                             foreach ($rule_group_model->rules as $rule_group_rule) {
                                 if(!isset($this->rules[$rule_group_rule['rule']])) {
@@ -157,7 +167,7 @@ class TransactionImporter extends Importer
                             }
                         }
                     }
-                }
+                }*/
             }
         }
     }
@@ -165,14 +175,18 @@ class TransactionImporter extends Importer
     private function applyRules($record) : ?Model
     {
         if(count($this->rule_groups)){
-            foreach ($this->rule_groups as $rule_group) {
-                if($rule_group) {
-                    $rule_group_rules = $rule_group->rules;
+            foreach ($this->rule_groups as $rule_group_rules) {
+                if(count($rule_group_rules)) {
+                    /*Log::info(print_r('$rule_group_rules', true));
+                    Log::info(print_r($rule_group_rules, true));*/
+                    //$rule_group_rules = $rule_group->rules;
                     foreach ($rule_group_rules as $rule_group_rule){
-                        $ruleObject = $this->rules[$rule_group_rule['rule']] ?? null;
+                        /*Log::info(print_r('$rule_group_rule', true));
+                        Log::info(print_r($rule_group_rule, true));*/
+                        $ruleObject = $rule_group_rule;
                         $result = null;
-                        if ($ruleObject) {
-                            $rule_fields = $ruleObject->rule_fields;
+                        if ($ruleObject instanceof Rule) {
+                            $rule_fields = $ruleObject->related_ruleFields()->get();
                             self::constraints($this->generateAvailableRuleConditions($rule_fields));
                             $rule_result_string = $this->applyRulesToQuery($this->original_data_query, $ruleObject->rules, 0, null);
                             eval('$result = ' . $rule_result_string . ';');
@@ -225,10 +239,12 @@ class TransactionImporter extends Importer
         }
 
         $rule_field_objects = [];
-        $selected_rule_fields = array_values($rule_fields);
-        $rule_fields_data = RuleField::query()->whereIn('id', $selected_rule_fields)->get(['title', 'type']);
 
-        foreach ($rule_fields_data as $field_data) {
+        /*
+        $selected_rule_fields = array_values($rule_fields);
+        $rule_fields_data = RuleField::query()->whereIn('id', $selected_rule_fields)->get(['title', 'type']);*/
+
+        foreach ($rule_fields as $field_data) {
             switch ($field_data->type) {
                 case RuleFieldTypeEnum::DATE->value:
                     $rule_field_objects[] = DateConstraint::make(Str::slug($field_data->title))->label($field_data->title);

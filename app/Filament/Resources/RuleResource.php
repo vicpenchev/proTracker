@@ -6,6 +6,7 @@ use App\Enums\RuleFieldTypeEnum;
 use App\Enums\RuleTypeEnum;
 use App\Enums\TransactionTypeEnum;
 use App\Filament\Resources\RuleResource\Pages;
+use App\Filament\Resources\RuleResource\RelationManagers\RuleGroupsRelationManager;
 use App\Models\Category;
 use App\Models\Rule;
 use App\Models\RuleField;
@@ -70,6 +71,8 @@ class RuleResource extends Resource
                                 ->required(fn (Forms\Get $get): bool => ($get('type') == RuleTypeEnum::TRANSACTION_COMBINE->value)),
                             Select::make('rule_fields')
                                 ->label('Rule Fields')
+                                ->relationship('rule_fields', 'title')
+                                ->preload()
                                 ->live()
                                 ->afterStateUpdated(function ($state) {
                                     Session::put('rule_fields', $state);
@@ -78,7 +81,7 @@ class RuleResource extends Resource
                                     Session::put('rule_fields', $state);
                                 })
                                 ->multiple()
-                                ->options(RuleField::query()->pluck('title', 'id'))
+                                //->options(RuleField::query()->pluck('title', 'id'))
                                 ->visible(fn (Forms\Get $get): bool => in_array($get('type'), RuleTypeEnum::toArray()))
                         ])
                         ->columns(2),
@@ -156,7 +159,7 @@ class RuleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RuleGroupsRelationManager::class,
         ];
     }
 
