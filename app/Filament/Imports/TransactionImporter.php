@@ -10,7 +10,6 @@ use App\Filament\CollectionFilterBuilder\Constraints\TextConstraint\Operators\Mu
 use App\Filament\CollectionFilterBuilder\Constraints\TextConstraint\Operators\MultiEqualsOperator;
 use App\Filament\CollectionFilterBuilder\Constraints\TextConstraint\Operators\MultiStartsWithOperator;
 use App\Models\Rule;
-use App\Models\RuleField;
 use App\Models\RuleGroup;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -152,29 +151,8 @@ class TransactionImporter extends Importer
             $rules = $this->options['Rules'];
             if(count($rules)){
                 foreach ($rules as $rule) {
-                    /*Log::info('RULE OPTION');
-                    Log::info(print_r($rule['rule'], true));*/
                     $this->rule_groups[$rule['rule']] = RuleGroup::find($rule['rule'])->related_rules()->get();
                 }
-                //dd(count($this->rule_groups));
-                //dd($this->rule_groups);
-                Log::info(print_r('$this->rule_groups', true));
-                Log::info(print_r(count($this->rule_groups), true));
-                /*if(count($this->rule_groups)) {
-                    foreach ($this->rule_groups as $rule_group_model) {
-                        Log::info('RULE GROUP RULES');
-                        Log::info(print_r($rule_group_model->rules()->orderBy('order')->get(), true));
-                        $this->rules[$rule_group_rule['rule']] = Rule::find($rule_group_rule['rule']);
-                        //dd($rule_group_model->rules);
-                        if($rule_group_model->rules) {
-                            foreach ($rule_group_model->rules as $rule_group_rule) {
-                                if(!isset($this->rules[$rule_group_rule['rule']])) {
-                                    $this->rules[$rule_group_rule['rule']] = Rule::find($rule_group_rule['rule']);
-                                }
-                            }
-                        }
-                    }
-                }*/
             }
         }
     }
@@ -184,12 +162,7 @@ class TransactionImporter extends Importer
         if(count($this->rule_groups)){
             foreach ($this->rule_groups as $rule_group_rules) {
                 if(count($rule_group_rules)) {
-                    /*Log::info(print_r('$rule_group_rules', true));
-                    Log::info(print_r($rule_group_rules, true));*/
-                    //$rule_group_rules = $rule_group->rules;
                     foreach ($rule_group_rules as $rule_group_rule){
-                        /*Log::info(print_r('$rule_group_rule', true));
-                        Log::info(print_r($rule_group_rule, true));*/
                         $ruleObject = $rule_group_rule;
                         $result = null;
                         if ($ruleObject instanceof Rule) {
@@ -246,10 +219,6 @@ class TransactionImporter extends Importer
         }
 
         $rule_field_objects = [];
-
-        /*
-        $selected_rule_fields = array_values($rule_fields);
-        $rule_fields_data = RuleField::query()->whereIn('id', $selected_rule_fields)->get(['title', 'type']);*/
 
         foreach ($rule_fields as $field_data) {
             switch ($field_data->type) {

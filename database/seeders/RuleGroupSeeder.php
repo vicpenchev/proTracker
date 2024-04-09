@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Enums\RuleFieldTypeEnum;
 use App\Models\RuleGroup;
 use Illuminate\Database\Seeder;
 
