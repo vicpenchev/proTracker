@@ -6,7 +6,7 @@ use App\Filament\CollectionFilterBuilder\Constraints\Operator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
-class IsMonthOperator extends Operator
+class IsMonthApplyOperator extends Operator
 {
     /**
      * Applies a filter to the given collection based on the specified month and column.

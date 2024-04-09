@@ -5,6 +5,10 @@ namespace App\Filament\Resources;
 use App\Enums\RuleFieldTypeEnum;
 use App\Enums\RuleTypeEnum;
 use App\Enums\TransactionTypeEnum;
+use App\Filament\CollectionFilterBuilder\Constraints\TextConstraint\Operators\MultiContainsOperator;
+use App\Filament\CollectionFilterBuilder\Constraints\TextConstraint\Operators\MultiEndsWithOperator;
+use App\Filament\CollectionFilterBuilder\Constraints\TextConstraint\Operators\MultiEqualsOperator;
+use App\Filament\CollectionFilterBuilder\Constraints\TextConstraint\Operators\MultiStartsWithOperator;
 use App\Filament\Resources\RuleResource\Pages;
 use App\Filament\Resources\RuleResource\RelationManagers\RuleGroupsRelationManager;
 use App\Models\Category;
@@ -14,10 +18,11 @@ use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Facades\FilamentIcon;
 use Filament\Tables;
 use Filament\Tables\Filters\QueryBuilder\Constraints\DateConstraint;
 use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
-use Filament\Tables\Filters\QueryBuilder\Constraints\TextConstraint;
+use App\Filament\CollectionFilterBuilder\Constraints\TextConstraint;
 use Filament\Tables\Filters\QueryBuilder\Forms\Components\RuleBuilder;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Select;
@@ -192,7 +197,15 @@ class RuleResource extends Resource
                     $rule_field_objects[] = NumberConstraint::make(Str::slug($field_data->title))->label($field_data->title);
                     break;
                 case RuleFieldTypeEnum::TEXT->value:
-                    $rule_field_objects[] = TextConstraint::make(Str::slug($field_data->title))->label($field_data->title);
+                    $rule_field_objects[] = TextConstraint::make(Str::slug($field_data->title))
+                        ->label($field_data->title)
+                        ->icon(FilamentIcon::resolve('tables::filters.query-builder.constraints.text') ?? 'heroicon-m-language')
+                        ->operators([
+                            MultiContainsOperator::class,
+                            MultiEndsWithOperator::class,
+                            MultiEqualsOperator::class,
+                            MultiStartsWithOperator::class,
+                        ]);
                     break;
             }
         }

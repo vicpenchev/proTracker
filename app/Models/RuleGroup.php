@@ -45,6 +45,13 @@ class RuleGroup extends Model
         return $this->hasMany(RuleGroupPivot::class);
     }
 
+    public function related_rules_create() : BelongsToMany
+    {
+        return $this->belongsToMany(Rule::class, 'rule_group_rule', 'rule_group_id', 'rule_id')
+            ->withPivot('order')
+            ->withTimestamps();
+    }
+
     public function related_rules() : BelongsToMany
     {
         return $this->belongsToMany(Rule::class, 'rule_group_rule')->using(RuleGroupPivot::class)->orderByPivot('order');

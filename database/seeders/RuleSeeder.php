@@ -21,7 +21,19 @@ class RuleSeeder extends Seeder
                 'category_id' => null,
                 'merge_fields' => null,
                 'rule_fields' => [3],
-                'rules' => [["type" => "type", "data" => ["operator" => "equals", "settings" => ["text" => "exp"]]]],
+                'rules' => [
+                    [
+                        "type" => "type",
+                        "data" => [
+                            "operator" => "equals",
+                            "settings" => [
+                                "text" => [
+                                    "exp",
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ],
             [
                 'title' => 'Income - Pro Tracker 1 Account 1 Credit Card',
@@ -31,7 +43,19 @@ class RuleSeeder extends Seeder
                 'category_id' => null,
                 'merge_fields' => null,
                 'rule_fields' => [3],
-                'rules' => [["type" => "type", "data" => ["operator" => "equals", "settings" => ["text" => "inc"]]]]
+                'rules' => [
+                    [
+                        "type" => "type",
+                        "data" => [
+                            "operator" => "equals",
+                            "settings" => [
+                                "text" => [
+                                    "inc",
+                                ],
+                            ],
+                        ],
+                    ],
+                ]
             ],
             [
                 'title' => 'Category Buffer - Pro Tracker 1 Account 1 Credit Card',
@@ -41,7 +65,19 @@ class RuleSeeder extends Seeder
                 'category_id' => 4,
                 'merge_fields' => null,
                 'rule_fields' => [3],
-                'rules' => [["type" => "type", "data" => ["operator" => "equals", "settings" => ["text" => "exp"]]]]
+                'rules' => [
+                    [
+                        "type" => "type",
+                        "data" => [
+                            "operator" => "equals",
+                            "settings" => [
+                                "text" => [
+                                    "exp",
+                                ],
+                            ],
+                        ],
+                    ],
+                ]
             ],
             [
                 'title' => 'Category Food - Pro Tracker 1 Account 1 Credit Card',
@@ -51,7 +87,33 @@ class RuleSeeder extends Seeder
                 'category_id' => 1,
                 'merge_fields' => null,
                 'rule_fields' => [6, 3],
-                'rules' => [["type" => "or", "data" => ["groups" => [["rules" => [["type" => "trsaction-description", "data" => ["operator" => "contains", "settings" => ["text" => "KAUFLAND"]]]]], ["rules" => [["type" => "trsaction-description", "data" => ["operator" => "contains", "settings" => ["text" => "FANTASTICO"]]]]], ["rules" => [["type" => "trsaction-description", "data" => ["operator" => "contains", "settings" => ["text" => "SUSHU TEST"]]]]], ["rules" => [["type" => "trsaction-description", "data" => ["operator" => "contains", "settings" => ["text" => "FARMACY FARMAGROUP"]]]]]]]], ["type" => "type", "data" => ["operator" => "equals", "settings" => ["text" => "exp"]]]]
+                'rules' => [
+                    [
+                        "type" => "type",
+                        "data" => [
+                            "operator" => "equals",
+                            "settings" => [
+                                "text" => [
+                                    "exp",
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        "type" => "trsaction-description",
+                        "data" => [
+                            "operator" => "contains",
+                            "settings" => [
+                                "text" => [
+                                    "KAUFLAND",
+                                    "FANTASTICO",
+                                    "SUSHU",
+                                    "FARMACY FARMAGROUP",
+                                ],
+                            ],
+                        ],
+                    ],
+                ]
             ],
             [
                 'title' => 'Category Taxes and Bills - Pro Tracker 1 Account 1 Credit Card',
@@ -61,7 +123,31 @@ class RuleSeeder extends Seeder
                 'category_id' => 2,
                 'merge_fields' => null,
                 'rule_fields' => [3, 6],
-                'rules' => [["type" => "type", "data" => ["operator" => "equals", "settings" => ["text" => "exp"]]], ["type" => "or", "data" => ["groups" => [["rules" => [["type" => "trsaction-description", "data" => ["operator" => "contains", "settings" => ["text" => "WATER BILL"]]]]], ["rules" => [["type" => "trsaction-description", "data" => ["operator" => "contains", "settings" => ["text" => "ELECTRICITY BILL"]]]]]]]]]
+                'rules' => [
+                    [
+                        "type" => "type",
+                        "data" => [
+                            "operator" => "equals",
+                            "settings" => [
+                                "text" => [
+                                    "exp",
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        "type" => "trsaction-description",
+                        "data" => [
+                            "operator" => "contains",
+                            "settings" => [
+                                "text" => [
+                                    "WATER BILL",
+                                    "ELECTRICITY BILL",
+                                ],
+                            ],
+                        ],
+                    ],
+                ]
             ],
             [
                 'title' => 'Category Gasoline - Pro Tracker 1 Account 1 Credit Card',
@@ -71,7 +157,30 @@ class RuleSeeder extends Seeder
                 'category_id' => 3,
                 'merge_fields' => null,
                 'rule_fields' => [3, 6],
-                'rules' => [["type" => "type", "data" => ["operator" => "equals", "settings" => ["text" => "exp"]]], ["type" => "or", "data" => ["groups" => [["rules" => [["type" => "trsaction-description", "data" => ["operator" => "contains", "settings" => ["text" => "SHELL"]]]]]]]]]
+                'rules' => [
+                    [
+                        "type" => "type",
+                        "data" => [
+                            "operator" => "equals",
+                            "settings" => [
+                                "text" => [
+                                    "exp",
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        "type" => "trsaction-description",
+                        "data" => [
+                            "operator" => "contains",
+                            "settings" => [
+                                "text" => [
+                                    "SHELL",
+                                ],
+                            ],
+                        ],
+                    ],
+                ]
             ],
             [
                 'title' => 'Category Credit - Pro Tracker 1 Account 1 Credit Card',
@@ -81,7 +190,30 @@ class RuleSeeder extends Seeder
                 'category_id' => 5,
                 'merge_fields' => null,
                 'rule_fields' => [3, 6],
-                'rules' => [["type" => "type", "data" => ["operator" => "equals", "settings" => ["text" => "exp"]]], ["type" => "trsaction-description", "data" => ["operator" => "contains", "settings" => ["text" => "PAYMENT OF A HOUSING LOAN"]]]]
+                'rules' => [
+                    [
+                        "type" => "type",
+                        "data" => [
+                            "operator" => "equals",
+                            "settings" => [
+                                "text" => [
+                                    "exp",
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        "type" => "trsaction-description",
+                        "data" => [
+                            "operator" => "contains",
+                            "settings" => [
+                                "text" => [
+                                    "PAYMENT OF A HOUSING LOAN",
+                                ],
+                            ],
+                        ],
+                    ],
+                ]
             ],
             [
                 'title' => 'Category Vacation - Pro Tracker 1 Account 1 Credit Card',
@@ -91,7 +223,30 @@ class RuleSeeder extends Seeder
                 'category_id' => 6,
                 'merge_fields' => null,
                 'rule_fields' => [3, 6],
-                'rules' => [["type" => "type", "data" => ["operator" => "equals", "settings" => ["text" => "exp"]]], ["type" => "trsaction-description", "data" => ["operator" => "contains", "settings" => ["text" => "BOOKING HOTEL"]]]]
+                'rules' => [
+                    [
+                        "type" => "type",
+                        "data" => [
+                            "operator" => "equals",
+                            "settings" => [
+                                "text" => [
+                                    "exp",
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        "type" => "trsaction-description",
+                        "data" => [
+                            "operator" => "contains",
+                            "settings" => [
+                                "text" => [
+                                    "BOOKING HOTEL",
+                                ],
+                            ],
+                        ],
+                    ],
+                ]
             ],
             [
                 'title' => 'Merge Description Fields - Pro Tracker 1 Account 1 Credit Card',
@@ -101,7 +256,19 @@ class RuleSeeder extends Seeder
                 'category_id' => null,
                 'merge_fields' => ["Trsaction Description", "Additional Description"],
                 'rule_fields' => [3],
-                'rules' => [["type" => "type", "data" => ["operator" => "contains.inverse", "settings" => ["text" => "Always True Condition"]]]]
+                'rules' => [
+                    [
+                        "type" => "type",
+                        "data" => [
+                            "operator" => "contains.inverse",
+                            "settings" => [
+                                "text" => [
+                                    "Always true condition",
+                                ],
+                            ],
+                        ],
+                    ],
+                ]
             ],
         ];
 
@@ -109,7 +276,7 @@ class RuleSeeder extends Seeder
             $tmp_rule_array = $rule;
             unset($tmp_rule_array['rule_fields']);
             $ruleObject = Rule::create($tmp_rule_array);
-                $ruleObject->rule_fields()->attach($rule['rule_fields']);
-            }
+            $ruleObject->rule_fields()->attach($rule['rule_fields']);
+        }
     }
 }

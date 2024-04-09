@@ -6,7 +6,7 @@ use App\Filament\CollectionFilterBuilder\Constraints\Operator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
-class IsDateOperator extends Operator
+class IsDateApplyOperator extends Operator
 {
     /**
      * Applies a filter to a collection based on the given qualified column and date.
