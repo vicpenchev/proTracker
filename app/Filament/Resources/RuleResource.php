@@ -153,6 +153,30 @@ class RuleResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->hidden(function (Rule $record) {
+                        if($record->rule_groups()->count() > 0){
+                            return true;
+                        }
+                        return false;
+                    }),
+                Tables\Actions\Action::make('View Related Rule Groups')
+                    ->tooltip('You cannot Delete Rule which has related Rule Groups to it!')
+                    ->hidden(function (Rule $record) {
+                        if($record->rule_groups()->count() > 0){
+                            return false;
+                        }
+                        return true;
+                    })
+                    ->icon('heroicon-o-exclamation-triangle')
+                    ->color('danger')
+                    ->modalContent(
+                        fn ($record) => view('filament.rules.related_rule_groups-modal', [
+                            'record' => $record
+                        ])
+                    )
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(false),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
