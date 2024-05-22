@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\RuleResource\RelationManagers;
 
+use App\Filament\Resources\RuleGroupResource;
+use App\Models\RuleGroup;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -26,8 +28,11 @@ class RuleGroupsRelationManager extends RelationManager
                 //Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                //Tables\Actions\EditAction::make(),
-                //Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->url(function (RuleGroup $record, RuleGroupResource $resource) {
+                        return $resource::getUrl('edit', ['record' => $record]);
+                    }),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->groupedBulkActions([
                 //Tables\Actions\DeleteBulkAction::make(),

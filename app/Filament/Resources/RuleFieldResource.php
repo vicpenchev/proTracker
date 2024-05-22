@@ -36,8 +36,6 @@ class RuleFieldResource extends Resource
                     ->required()
                     ->live()
                     ->options(array_map(fn($value) => strtolower($value), RuleFieldTypeEnum::toArrayNames())),
-                /*TextInput::make('slug')
-                    ->maxLength(255),*/
                 Textarea::make('description')
                     ->maxLength(65535)
                     ->columnSpanFull(),
@@ -62,14 +60,9 @@ class RuleFieldResource extends Resource
                         RuleFieldTypeEnum::VALUE->value => __('Value'),
                         RuleFieldTypeEnum::TEXT->value => __('Text'),
                     }),
-                /*Tables\Columns\TextColumn::make('slug')
-                    ->sortable()
-                    ->wrap()
-                    ->tooltip(fn (string $state): string => $state),*/
                 Tables\Columns\TextColumn::make('description')
                     ->wrap()
                     ->limit(30)
-                    //->tooltip(fn (string $state): string => $state ?? '')
                     ->searchable(isIndividual: true, isGlobal: false),
             ])
             ->filters([
@@ -77,12 +70,44 @@ class RuleFieldResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->hidden(function (RuleField $record) {
+                        if($record->rules()->count() > 0){
+                            return true;
+                        }
+                        return false;
+                    }),
+                Tables\Actions\Action::make('View Related Rules')
+                    ->tooltip('You cannot Delete Rule Fields which has related rules to it!')
+                    ->hidden(function (RuleField $record) {
+                        if($record->rules()->count() > 0){
+                            return false;
+                        }
+                        return true;
+                    })
+                    ->icon('heroicon-o-exclamation-triangle')
+                    ->color('danger')
+                    ->modalContent(
+                        fn ($record) => view('filament.rule_fields.related_rules-modal', [
+                            'record' => $record
+                        ])
+                    )
+                    ->modalSubmitAction(false)
+                    ->modalCancelAction(false),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->checkIfRecordIsSelectableUsing(
+                function(RuleField $record) {
+                    if($record->rules()->count() > 0){
+                        return false;
+                    }
+                    return true;
+                }
+            );
     }
 
     public static function getRelations(): array
