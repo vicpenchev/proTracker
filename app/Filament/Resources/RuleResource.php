@@ -182,7 +182,15 @@ class RuleResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->checkIfRecordIsSelectableUsing(
+                function(Rule $record) {
+                    if($record->rule_groups()->count() > 0){
+                        return false;
+                    }
+                    return true;
+                }
+            );
     }
 
     public static function getRelations(): array
