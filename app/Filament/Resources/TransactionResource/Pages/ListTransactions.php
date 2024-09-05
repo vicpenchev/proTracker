@@ -9,9 +9,13 @@ use Filament\Actions;
 use Filament\Pages\Concerns\ExposesTableToWidgets;
 use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Support\Facades\FilamentAsset;
 use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Session;
+use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use Filament\Support\Assets\Js;
 
 class ListTransactions extends ListRecords
 {
@@ -23,6 +27,17 @@ class ListTransactions extends ListRecords
 
     private array $widgets = [];
 
+    public function mount(): void
+    {
+        parent::mount();
+
+        FilamentAsset::register([
+            Js::make('jspdf', 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'),
+            Js::make('html2canvas', 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.js'),
+            Js::make('html2pdf', asset('js/custom/html2pdf.js')),
+        ]);
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -31,18 +46,27 @@ class ListTransactions extends ListRecords
                 ->tooltip('Importing transactions for Account.')
                 ->importer(TransactionImporter::class)
                 ->chunkSize(1000),
-            /*Actions\Action::make('Filter')
-                ->button()
-                ->label(__('Filter')),*/
-                /*->action(function (Action $action) {
-
-                }),*/
+            ExportAction::make()
+                ->exports([
+                    ExcelExport::make()
+                        ->askForWriterType()
+                        ->askForFilename()
+                        ->fromTable()
+                ]),
+            Actions\Action::make('generatePDF')
+                ->label('Download PDF')
+                ->icon('heroicon-o-document-arrow-down')
+                ->visible(true)
+                ->extraAttributes([
+                    'onclick' => 'javascript:generatePDF()',
+                ]),
         ];
     }
 
     public function getHeaderWidgets(): array
     {
-        $widgets[] = TransactionResource\Widgets\Settings::class;
+        $widgets = [];
+        //$widgets[] = TransactionResource\Widgets\Settings::class;
         if(Session::has('transaction_settings')) {
             $settings = Session::get('transaction_settings');
 
@@ -86,4 +110,6 @@ class ListTransactions extends ListRecords
                 ->badge(Transaction::query()->where('published', '=', false)->count()),
         ];
     }
+
+
 }

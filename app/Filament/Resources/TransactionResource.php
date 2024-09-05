@@ -4,11 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Enums\TransactionCreateTypeEnum;
 use App\Enums\TransactionTypeEnum;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Filament\Imports\TransactionImporter;
 use App\Filament\Resources\TransactionResource\Pages;
 use App\Models\Category;
 use App\Models\Transaction;
-use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
@@ -19,10 +20,13 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Filament\Tables\Enums\FiltersLayout;
+use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class TransactionResource extends Resource
 {
     protected static ?string $model = Transaction::class;
+
+    protected static ?string $label = 'Transactions';
 
     protected static ?string $navigationGroup = 'General';
 
@@ -87,12 +91,12 @@ class TransactionResource extends Resource
                         if($record->currency()->prefix) {
                             return '';
                         } else {
-                            return ' ' . ($record->currency()->symbol ?? '');
+                            return ' ' . (html_entity_decode($record->currency()->symbol, ENT_QUOTES, 'UTF-8') ?? '');
                         }
                     })
                     ->prefix(function(Transaction $record) {
                         if($record->currency()->prefix) {
-                            return ($record->currency()->symbol ?? '') . ' ';
+                            return (html_entity_decode($record->currency()->symbol, ENT_QUOTES, 'UTF-8') ?? '') . ' ';
                         } else {
                             return '';
                         }
@@ -390,6 +394,14 @@ class TransactionResource extends Resource
                             $records->each->setType($data['type']);
                         })
                         ->requiresConfirmation(),
+                    ExportBulkAction::make()
+                        ->exports([
+                            ExcelExport::make()
+                                ->askForWriterType()
+                                ->askForFilename()
+                                //->withFilename(fn ($resource) => $resource::getLabel() . '_' . date('Y-m-d'))
+                                ->fromTable()
+                        ])
                 ]),
             ])
             ->headerActions([
@@ -397,6 +409,14 @@ class TransactionResource extends Resource
                     ->tooltip('Importing transactions for Account.')
                     ->importer(TransactionImporter::class)
                     ->chunkSize(1000),
+                ExportAction::make()
+                    ->exports([
+                        ExcelExport::make()
+                            ->askForWriterType()
+                            ->askForFilename()
+                            //->withFilename(fn ($resource) => $resource::getLabel() . '_' . date('Y-m-d'))
+                            ->fromTable()
+                    ])
             ]);
     }
 
@@ -419,7 +439,6 @@ class TransactionResource extends Resource
             'index' => Pages\ListTransactions::route('/'),
             'create' => Pages\CreateTransaction::route('/create'),
             'edit' => Pages\EditTransaction::route('/{record}/edit'),
-            //'import' => Pages\ImportCSVTransaction::route('/import'),
         ];
     }
 
