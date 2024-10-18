@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -21,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'currency_id',
+        'stats_base_currency'
     ];
 
     /**
@@ -41,6 +44,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'stats_base_currency' => 'boolean',
     ];
 
     public function accounts() : HasMany
@@ -56,5 +60,10 @@ class User extends Authenticatable
     public function rules() : HasMany
     {
         return $this->hasMany(Rule::class);
+    }
+
+    public function currency() : HasOne
+    {
+        return $this->hasOne(Currency::class);
     }
 }

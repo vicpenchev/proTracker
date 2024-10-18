@@ -18,6 +18,7 @@ class Currency extends Model
         'code',
         'countryname',
         'name',
-        'symbol'
+        'symbol',
+        'conversion_rates'
     ];
 }

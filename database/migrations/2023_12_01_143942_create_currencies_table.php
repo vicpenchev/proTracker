@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name', 255)->nullable(false);
             $table->string('symbol', 255)->nullable(false);
             $table->boolean('prefix')->nullable(false)->default(true);
+            $table->float('conversion_rates', 10, 4)->nullable(false)->default(1);
             $table->timestamps();
         });
     }

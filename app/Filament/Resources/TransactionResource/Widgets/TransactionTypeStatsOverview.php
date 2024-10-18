@@ -8,6 +8,7 @@ use Filament\Widgets\Concerns\InteractsWithPageTable;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Number;
 
 class TransactionTypeStatsOverview extends BaseWidget
@@ -23,6 +24,7 @@ class TransactionTypeStatsOverview extends BaseWidget
 
     protected function getStats(): array
     {
+        $value_column = (Auth::user()->stats_base_currency ? 'value_converted' : 'value');
         $query = $this->getPageTableQuery();
         $types = DatasetHelper::generateCategoriesFor();
         $dataset = [];
@@ -33,7 +35,7 @@ class TransactionTypeStatsOverview extends BaseWidget
         $total_income_sum = 0;
         if($query->count()) {
             $filterQuery_total = $query->clone()
-                ->selectRaw('SUM(value) as sum')
+                ->selectRaw('SUM(' . $value_column . ') as sum')
                 ->where('type', TransactionTypeEnum::INCOME->value)
                 ->get();
             $arr_total = $filterQuery_total->toArray();
@@ -64,7 +66,7 @@ class TransactionTypeStatsOverview extends BaseWidget
 
             if($type['id'] == TransactionTypeEnum::EXPENSE->value) {
                 $filterQuery = $query->clone()
-                    ->selectRaw('SUM(value) as sum')
+                    ->selectRaw('SUM(' . $value_column . ') as sum')
                     ->where('type', $type['id'])
                     ->get();
                 $arr = $filterQuery->toArray();

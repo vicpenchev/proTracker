@@ -6,6 +6,7 @@ return [
         'name' => 'Afghanistan Afghani',
         'symbol' => '&#1547;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'ARS',
@@ -13,6 +14,7 @@ return [
         'name' => 'Argentine Peso',
         'symbol' => '&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'AWG',
@@ -20,6 +22,7 @@ return [
         'name' => 'Aruban florin',
         'symbol' => '&#402;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'AUD',
@@ -27,6 +30,7 @@ return [
         'name' => 'Australian Dollar',
         'symbol' => '&#65;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'AZN',
@@ -34,6 +38,7 @@ return [
         'name' => 'Azerbaijani Manat',
         'symbol' => '&#8380;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BSD',
@@ -41,6 +46,7 @@ return [
         'name' => 'Bahamas Dollar',
         'symbol' => '&#66;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BBD',
@@ -48,6 +54,7 @@ return [
         'name' => 'Barbados Dollar',
         'symbol' => '&#66;&#100;&#115;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BDT',
@@ -55,6 +62,7 @@ return [
         'name' => 'Bangladeshi taka',
         'symbol' => '&#2547;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BYN',
@@ -62,6 +70,7 @@ return [
         'name' => 'Belarus Ruble',
         'symbol' => '&#66;&#114;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BZD',
@@ -69,6 +78,7 @@ return [
         'name' => 'Belize Dollar',
         'symbol' => '&#66;&#90;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BMD',
@@ -76,6 +86,7 @@ return [
         'name' => 'Bermudian Dollar',
         'symbol' => '&#66;&#68;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BOP',
@@ -83,6 +94,7 @@ return [
         'name' => 'Boliviano',
         'symbol' => '&#66;&#115;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BAM',
@@ -90,6 +102,7 @@ return [
         'name' => 'Bosnia-Herzegovina Convertible Marka',
         'symbol' => '&#75;&#77;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BWP',
@@ -97,6 +110,7 @@ return [
         'name' => 'Botswana pula',
         'symbol' => '&#80;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BGN',
@@ -104,6 +118,7 @@ return [
         'name' => 'Bulgarian lev',
         'symbol' => '&#1083;&#1074;',
         'prefix' => false,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BRL',
@@ -111,6 +126,7 @@ return [
         'name' => 'Brazilian real',
         'symbol' => '&#82;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'BND',
@@ -118,6 +134,7 @@ return [
         'name' => 'Brunei dollar',
         'symbol' => '&#66;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'KHR',
@@ -125,6 +142,7 @@ return [
         'name' => 'Cambodian riel',
         'symbol' => '&#6107;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'CAD',
@@ -132,6 +150,7 @@ return [
         'name' => 'Canadian dollar',
         'symbol' => '&#67;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'KYD',
@@ -139,6 +158,7 @@ return [
         'name' => 'Cayman Islands dollar',
         'symbol' => '&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'CLP',
@@ -146,6 +166,7 @@ return [
         'name' => 'Chilean peso',
         'symbol' => '&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'CNY',
@@ -153,6 +174,7 @@ return [
         'name' => 'Chinese Yuan Renminbi',
         'symbol' => '&#165;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'COP',
@@ -160,6 +182,7 @@ return [
         'name' => 'Colombian peso',
         'symbol' => '&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'CRC',
@@ -167,6 +190,7 @@ return [
         'name' => 'Costa Rican colón',
         'symbol' => '&#8353;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'HRK',
@@ -174,6 +198,7 @@ return [
         'name' => 'Croatian kuna',
         'symbol' => '&#107;&#110;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'CUP',
@@ -181,6 +206,7 @@ return [
         'name' => 'Cuban peso',
         'symbol' => '&#8369;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'CZK',
@@ -188,6 +214,7 @@ return [
         'name' => 'Czech koruna',
         'symbol' => '&#75;&#269;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'DKK',
@@ -195,6 +222,7 @@ return [
         'name' => 'Danish krone',
         'symbol' => '&#107;&#114;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'DOP',
@@ -202,6 +230,7 @@ return [
         'name' => 'Dominican peso',
         'symbol' => '&#82;&#68;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'XCD',
@@ -209,6 +238,7 @@ return [
         'name' => 'Eastern Caribbean dollar',
         'symbol' => '&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'EGP',
@@ -216,6 +246,7 @@ return [
         'name' => 'Egyptian pound',
         'symbol' => '&#163;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'SVC',
@@ -223,6 +254,7 @@ return [
         'name' => 'Salvadoran colón',
         'symbol' => '&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'EEK',
@@ -230,6 +262,7 @@ return [
         'name' => 'Estonian kroon',
         'symbol' => '&#75;&#114;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'EUR',
@@ -239,6 +272,7 @@ return [
         'name' => 'Euro',
         'symbol' => '&#8364;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'FKP',
@@ -246,6 +280,7 @@ return [
         'name' => 'Falkland Islands (Malvinas) Pound',
         'symbol' => '&#70;&#75;&#163;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'FJD',
@@ -253,6 +288,7 @@ return [
         'name' => 'Fijian dollar',
         'symbol' => '&#70;&#74;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'GHC',
@@ -260,6 +296,7 @@ return [
         'name' => 'Ghanaian cedi',
         'symbol' => '&#71;&#72;&#162;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'GIP',
@@ -267,6 +304,7 @@ return [
         'name' => 'Gibraltar pound',
         'symbol' => '&#163;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'GTQ',
@@ -274,6 +312,7 @@ return [
         'name' => 'Guatemalan quetzal',
         'symbol' => '&#81;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'GGP',
@@ -281,6 +320,7 @@ return [
         'name' => 'Guernsey pound',
         'symbol' => '&#81;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'GYD',
@@ -288,6 +328,7 @@ return [
         'name' => 'Guyanese dollar',
         'symbol' => '&#71;&#89;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'HNL',
@@ -295,6 +336,7 @@ return [
         'name' => 'Honduran lempira',
         'symbol' => '&#76;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'HKD',
@@ -302,6 +344,7 @@ return [
         'name' => 'Hong Kong dollar',
         'symbol' => '&#72;&#75;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'HUF',
@@ -309,6 +352,7 @@ return [
         'name' => 'Hungarian forint',
         'symbol' => '&#70;&#116;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'ISK',
@@ -316,6 +360,7 @@ return [
         'name' => 'Icelandic króna',
         'symbol' => '&#237;&#107;&#114;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'INR',
@@ -323,6 +368,7 @@ return [
         'name' => 'Indian rupee',
         'symbol' => '&#8377;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'IDR',
@@ -330,6 +376,7 @@ return [
         'name' => 'Indonesian rupiah',
         'symbol' => '&#82;&#112;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'IRR',
@@ -337,6 +384,7 @@ return [
         'name' => 'Iranian rial',
         'symbol' => '&#65020;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'IMP',
@@ -344,6 +392,7 @@ return [
         'name' => 'Manx pound',
         'symbol' => '&#163;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'ILS',
@@ -351,6 +400,7 @@ return [
         'name' => 'Israeli Shekel',
         'symbol' => '&#8362;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'JMD',
@@ -358,6 +408,7 @@ return [
         'name' => 'Jamaican dollar',
         'symbol' => '&#74;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'JPY',
@@ -365,6 +416,7 @@ return [
         'name' => 'Japanese yen',
         'symbol' => '&#165;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'JEP',
@@ -372,6 +424,7 @@ return [
         'name' => 'Jersey pound',
         'symbol' => '&#163;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'KZT',
@@ -379,6 +432,7 @@ return [
         'name' => 'Kazakhstani tenge',
         'symbol' => '&#8376;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'KPW',
@@ -386,6 +440,7 @@ return [
         'name' => 'North Korean won',
         'symbol' => '&#8361;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'KPW',
@@ -393,6 +448,7 @@ return [
         'name' => 'South Korean won',
         'symbol' => '&#8361;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'KGS',
@@ -400,6 +456,7 @@ return [
         'name' => 'Kyrgyzstani som',
         'symbol' => '&#1083;&#1074;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'LAK',
@@ -407,6 +464,7 @@ return [
         'name' => 'Lao kip',
         'symbol' => '&#8365;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'LAK',
@@ -414,6 +472,7 @@ return [
         'name' => 'Latvian lats',
         'symbol' => '&#8364;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'LVL',
@@ -421,6 +480,7 @@ return [
         'name' => 'Latvian lats',
         'symbol' => '&#8364;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'LBP',
@@ -428,6 +488,7 @@ return [
         'name' => 'Lebanese pound',
         'symbol' => '&#76;&#163;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'LRD',
@@ -435,6 +496,7 @@ return [
         'name' => 'Liberian dollar',
         'symbol' => '&#76;&#68;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'LTL',
@@ -442,6 +504,7 @@ return [
         'name' => 'Lithuanian litas',
         'symbol' => '&#8364;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'MKD',
@@ -449,6 +512,7 @@ return [
         'name' => 'Macedonian denar',
         'symbol' => '&#1076;&#1077;&#1085;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'MYR',
@@ -456,6 +520,7 @@ return [
         'name' => 'Malaysian ringgit',
         'symbol' => '&#82;&#77;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'MUR',
@@ -463,6 +528,7 @@ return [
         'name' => 'Mauritian rupee',
         'symbol' => '&#82;&#115;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'MXN',
@@ -470,6 +536,7 @@ return [
         'name' => 'Mexican peso',
         'symbol' => '&#77;&#101;&#120;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'MNT',
@@ -477,6 +544,7 @@ return [
         'name' => 'Mongolian tögrög',
         'symbol' => '&#8366;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -485,6 +553,7 @@ return [
         'name' => 'Mozambican metical',
         'symbol' => '&#77;&#84;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'NAD',
@@ -492,6 +561,7 @@ return [
         'name' => 'Namibian dollar',
         'symbol' => '&#78;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'NPR',
@@ -499,6 +569,7 @@ return [
         'name' => 'Nepalese rupee',
         'symbol' => '&#82;&#115;&#46;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'ANG',
@@ -506,6 +577,7 @@ return [
         'name' => 'Netherlands Antillean guilder',
         'symbol' => '&#402;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'NZD',
@@ -513,6 +585,7 @@ return [
         'name' => 'New Zealand dollar',
         'symbol' => '&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -521,6 +594,7 @@ return [
         'name' => 'Nicaraguan córdoba',
         'symbol' => '&#67;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'NGN',
@@ -528,6 +602,7 @@ return [
         'name' => 'Nigerian naira',
         'symbol' => '&#8358;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'NOK',
@@ -535,6 +610,7 @@ return [
         'name' => 'Norwegian krone',
         'symbol' => '&#107;&#114;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'OMR',
@@ -542,6 +618,7 @@ return [
         'name' => 'Omani rial',
         'symbol' => '&#65020;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'PKR',
@@ -549,6 +626,7 @@ return [
         'name' => 'Pakistani rupee',
         'symbol' => '&#82;&#115;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'PAB',
@@ -556,6 +634,7 @@ return [
         'name' => 'Panamanian balboa',
         'symbol' => '&#66;&#47;&#46;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'PYG',
@@ -563,6 +642,7 @@ return [
         'name' => 'Paraguayan Guaraní',
         'symbol' => '&#8370;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'PEN',
@@ -570,6 +650,7 @@ return [
         'name' => 'Sol',
         'symbol' => '&#83;&#47;&#46;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'PHP',
@@ -577,6 +658,7 @@ return [
         'name' => 'Philippine peso',
         'symbol' => '&#8369;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'PLN',
@@ -584,6 +666,7 @@ return [
         'name' => 'Polish złoty',
         'symbol' => '&#122;&#322;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'QAR',
@@ -591,6 +674,7 @@ return [
         'name' => 'Qatari Riyal',
         'symbol' => '&#65020;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'RON',
@@ -598,6 +682,7 @@ return [
         'name' => 'Romanian leu (Leu românesc)',
         'symbol' => '&#76;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'RUB',
@@ -605,6 +690,7 @@ return [
         'name' => 'Russian ruble',
         'symbol' => '&#8381;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -613,6 +699,7 @@ return [
         'name' => 'Saint Helena pound',
         'symbol' => '&#163;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'SAR',
@@ -620,6 +707,7 @@ return [
         'name' => 'Saudi riyal',
         'symbol' => '&#65020;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'RSD',
@@ -627,6 +715,7 @@ return [
         'name' => 'Serbian dinar',
         'symbol' => '&#100;&#105;&#110;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'SCR',
@@ -634,6 +723,7 @@ return [
         'name' => 'Seychellois rupee',
         'symbol' => '&#82;&#115;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'SGD',
@@ -641,6 +731,7 @@ return [
         'name' => 'Singapore dollar',
         'symbol' => '&#83;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'SBD',
@@ -648,6 +739,7 @@ return [
         'name' => 'Solomon Islands dollar',
         'symbol' => '&#83;&#73;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'SOS',
@@ -655,6 +747,7 @@ return [
         'name' => 'Somali shilling',
         'symbol' => '&#83;&#104;&#46;&#83;&#111;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'ZAR',
@@ -662,6 +755,7 @@ return [
         'name' => 'South African rand',
         'symbol' => '&#82;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'LKR',
@@ -669,6 +763,7 @@ return [
         'name' => 'Sri Lankan rupee',
         'symbol' => '&#82;&#115;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -677,6 +772,7 @@ return [
         'name' => 'Swedish krona',
         'symbol' => '&#107;&#114;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -685,6 +781,7 @@ return [
         'name' => 'Swiss franc',
         'symbol' => '&#67;&#72;&#102;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'SRD',
@@ -692,6 +789,7 @@ return [
         'name' => 'Suriname Dollar',
         'symbol' => '&#83;&#114;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'SYP',
@@ -699,6 +797,7 @@ return [
         'name' => 'Syrian pound',
         'symbol' => '&#163;&#83;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'TWD',
@@ -706,6 +805,7 @@ return [
         'name' => 'New Taiwan dollar',
         'symbol' => '&#78;&#84;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -714,6 +814,7 @@ return [
         'name' => 'Thai baht',
         'symbol' => '&#3647;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -722,6 +823,7 @@ return [
         'name' => 'Trinidad and Tobago dollar',
         'symbol' => '&#84;&#84;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -730,6 +832,7 @@ return [
         'name' => 'Turkey Lira',
         'symbol' => '&#8378;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'TVD',
@@ -737,6 +840,7 @@ return [
         'name' => 'Tuvaluan dollar',
         'symbol' => '&#84;&#86;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'UAH',
@@ -744,6 +848,7 @@ return [
         'name' => 'Ukrainian hryvnia',
         'symbol' => '&#8372;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -752,6 +857,7 @@ return [
         'name' => 'Pound sterling',
         'symbol' => '&#163;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -760,6 +866,7 @@ return [
         'name' => 'Ugandan shilling',
         'symbol' => '&#85;&#83;&#104;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -768,6 +875,7 @@ return [
         'name' => 'United States dollar',
         'symbol' => '&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'UYU',
@@ -775,6 +883,7 @@ return [
         'name' => 'Peso Uruguayolar',
         'symbol' => '&#36;&#85;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'UZS',
@@ -782,6 +891,7 @@ return [
         'name' => 'Uzbekistani soʻm',
         'symbol' => '&#1083;&#1074;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -790,6 +900,7 @@ return [
         'name' => 'Venezuelan bolívar',
         'symbol' => '&#66;&#115;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
 
@@ -798,6 +909,7 @@ return [
         'name' => 'Vietnamese dong (Đồng)',
         'symbol' => '&#8363;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'VND',
@@ -805,6 +917,7 @@ return [
         'name' => 'Yemeni rial',
         'symbol' => '&#65020;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 
     array('code' => 'ZWD',
@@ -812,5 +925,6 @@ return [
         'name' => 'Zimbabwean dollar',
         'symbol' => '&#90;&#36;',
         'prefix' => true,
+        'conversion_rates' => 1,
     ),
 ];

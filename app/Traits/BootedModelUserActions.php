@@ -2,7 +2,10 @@
 
 namespace App\Traits;
 
+use App\Jobs\ConvertToUserBaseCurrency;
+use App\Models\Account;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 trait BootedModelUserActions
 {
@@ -35,6 +38,14 @@ trait BootedModelUserActions
         static::deleting(function ($model) {
             if ($userId = self::getAuthUserId()) {
                 $model->user_id = $userId;
+            }
+        });
+
+        static::updated(function ($model) {
+            if($model instanceof Account) {
+                $user = Auth::user();
+                $account_id = $model->id;
+                ConvertToUserBaseCurrency::dispatch($user, $account_id);
             }
         });
     }

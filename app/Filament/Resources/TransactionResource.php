@@ -4,6 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Enums\TransactionCreateTypeEnum;
 use App\Enums\TransactionTypeEnum;
+use App\Filament\Helpers\CurrencyHelper;
+use App\Models\Currency;
+use Illuminate\Support\Facades\Auth;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Filament\Imports\TransactionImporter;
@@ -88,15 +91,20 @@ class TransactionResource extends Resource
                     ->label('Sum')
                     ->numeric()
                     ->suffix(function(Transaction $record) {
-                        if($record->currency()->prefix) {
+                        $hasPrefix = $record->currency()->prefix;
+                        $symbol = $record->currency()->symbol;
+                        if($hasPrefix) {
                             return '';
                         } else {
-                            return ' ' . (html_entity_decode($record->currency()->symbol, ENT_QUOTES, 'UTF-8') ?? '');
+                            return ' ' . (html_entity_decode($symbol, ENT_QUOTES, 'UTF-8') ?? '');
                         }
                     })
                     ->prefix(function(Transaction $record) {
-                        if($record->currency()->prefix) {
-                            return (html_entity_decode($record->currency()->symbol, ENT_QUOTES, 'UTF-8') ?? '') . ' ';
+                        $hasPrefix = $record->currency()->prefix;
+                        $symbol = $record->currency()->symbol;
+
+                        if($hasPrefix) {
+                            return (html_entity_decode($symbol, ENT_QUOTES, 'UTF-8') ?? '') . ' ';
                         } else {
                             return '';
                         }
@@ -116,6 +124,43 @@ class TransactionResource extends Resource
                         ->label('Income')
                         ->query(fn (\Illuminate\Database\Query\Builder $query) => $query->where('category_id', 2))
                     ),*/
+                Tables\Columns\TextColumn::make('value_converted')
+                    ->label('Sum Base Currency')
+                    ->numeric()
+                    ->suffix(function(Transaction $record) {
+                        if(Auth::user()->currency_id && Auth::user()->currency_id !== $record->currency()->id) {
+                            $base_currency_collection = Currency::find(Auth::user()->currency_id);
+                            $hasPrefix = $base_currency_collection->prefix;
+                            $symbol = $base_currency_collection->symbol;
+                        } else {
+                            $hasPrefix = $record->currency()->prefix;
+                            $symbol = $record->currency()->symbol;
+                        }
+
+                        if($hasPrefix) {
+                            return '';
+                        } else {
+                            return ' ' . (html_entity_decode($symbol, ENT_QUOTES, 'UTF-8') ?? '');
+                        }
+                    })
+                    ->prefix(function(Transaction $record) {
+                        if(Auth::user()->currency_id && Auth::user()->currency_id !== $record->currency()->id) {
+                            $base_currency_collection = Currency::find(Auth::user()->currency_id);
+                            $hasPrefix = $base_currency_collection->prefix;
+                            $symbol = $base_currency_collection->symbol;
+                        } else {
+                            $hasPrefix = $record->currency()->prefix;
+                            $symbol = $record->currency()->symbol;
+                        }
+
+                        if($hasPrefix) {
+                            return (html_entity_decode($symbol, ENT_QUOTES, 'UTF-8') ?? '') . ' ';
+                        } else {
+                            return '';
+                        }
+                    })
+                    ->html()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('date')
                     ->dateTime()
                     ->sortable()

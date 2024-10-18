@@ -3,6 +3,7 @@ namespace App\Filament\Helpers;
 
 use App\Enums\TransactionTypeEnum;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Number;
 
 final class DatasetHelper {
@@ -61,7 +62,7 @@ final class DatasetHelper {
         $data = $data->mapWithKeys(function ($grp, $key){
             return [
                 $key => [
-                    'value' => $grp->sum('value')
+                    'value' => $grp->sum((Auth::user()->stats_base_currency ? 'value_converted' : 'value'))
                 ]
             ];
         });

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\TransactionTypeEnum;
+use App\Filament\Helpers\CurrencyHelper;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -32,6 +33,7 @@ class Transaction extends Model
         'notes',
         'published',
         'type',
+        'value_converted',
     ];
 
     protected $hidden = [
@@ -60,6 +62,25 @@ class Transaction extends Model
         static::addGlobalScope('by_account', function (Builder $builder) {
             if(auth()->check()) {
                 $builder->whereIn('account_id', Account::all('id')->toArray());
+            }
+        });
+
+        static::creating(function ($model) {
+            if (is_null($model->value_converted)) {
+                $fromCurrencyId = $model->account()->get('currency_id')->first()->currency_id;
+                $user_id = $model->account()->get('user_id')->first()->user_id;
+                $toCurrencyId = User::where('id', $user_id)->get('currency_id')->first()->currency_id;
+
+                if(!$toCurrencyId) {
+                    $model->value_converted = $model->value;
+                } else {
+                    $converted_amount = CurrencyHelper::convert(
+                        $model->value,
+                        $fromCurrencyId,
+                        $toCurrencyId
+                    );
+                    $model->value_converted = $converted_amount;
+                }
             }
         });
     }

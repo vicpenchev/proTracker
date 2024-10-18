@@ -9,6 +9,7 @@ use Filament\Widgets\Concerns\InteractsWithPageTable;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Number;
 
 class StatsOverview extends BaseWidget
@@ -22,6 +23,8 @@ class StatsOverview extends BaseWidget
 
     protected function getStats(): array
     {
+        $value_column = (Auth::user()->stats_base_currency ? 'value_converted' : 'value');
+
         $query = $this->getPageTableQuery();
 
         $categories = Category::all()->map(
@@ -38,7 +41,7 @@ class StatsOverview extends BaseWidget
         $total_income_sum = 0;
         if($query->count()) {
             $filterQuery_total = $query->clone()
-                ->selectRaw('SUM(value) as sum')
+                ->selectRaw('SUM(' . $value_column . ') as sum')
                 ->where('type', TransactionTypeEnum::INCOME->value)
                 ->get();
             $arr_total = $filterQuery_total->toArray();
@@ -68,7 +71,7 @@ class StatsOverview extends BaseWidget
             }
 
             $filterQuery = $query->clone()
-                ->selectRaw('SUM(value) as sum')
+                ->selectRaw('SUM(' . $value_column . ') as sum')
                 ->where('category_id', $category['id'])
                 ->get();
             $arr = $filterQuery->toArray();
