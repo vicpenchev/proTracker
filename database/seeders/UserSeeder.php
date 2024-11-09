@@ -17,13 +17,18 @@ class UserSeeder extends Seeder
                 [
                     'name' => 'Pro Tracker 1',
                     'email' => 'protracker@protracker.test',
-                    'password' => bcrypt('111111')
+                    'password' => bcrypt('111111'),
+                    'email_verified_at' => now(),
+                    'active' => true,
                 ],
                 [
                     'name' => 'Pro Tracker 2',
                     'email' => 'protracker2@protracker.test',
-                    'password' => bcrypt('111111')
+                    'password' => bcrypt('111111'),
+                    'email_verified_at' => now(),
+                    'active' => true,
                 ],
-            ]);
+            ]
+        );
     }
 }
