@@ -4,7 +4,7 @@
 You can keep your finances in order, track by account, type(expense/income), category, 
 advanced filtering and reporting summaries, stats and charts, it's simple and straight forward.
 
-This tool is available on <a href="https://www.protracker.io">protracker.io</a>, you can contact me to activate your account on [email](mailto:&#112;&#114;&#111;&#105;&#111;&#116;&#114;&#97;&#99;&#107;&#101;&#114;&commat;&#103;&#109;&#97;&#105;&#108;&period;&#99;&#111;&#109;).
+This tool is available on <a href="https://www.protracker.io">protracker.io</a>, you can contact me to activate your account on this [email](mailto:&#112;&#114;&#111;&#105;&#111;&#116;&#114;&#97;&#99;&#107;&#101;&#114;&commat;&#103;&#109;&#97;&#105;&#108;&period;&#99;&#111;&#109;).
 </p>
 
 <p align="center">
